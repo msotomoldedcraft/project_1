@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Step 5 – Email Verification{% endblock %}
+
+{% block body %}
+<h1>Step 5: Email Verification</h1>
+
+{% if form is defined %}
+    {# Verification form #}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
+    {{ form_start(form) }}
+    {{ form_row(form.code) }}
+    <button class="btn btn-primary">Verify</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('exchange_step_4') }}" class="btn btn-secondary mt-3">Back</a>
+
+{% else %}
+    {# Confirm & Send Verification button #}
+    <p>Click below to confirm your details and receive a verification code via email.</p>
+
+    <form method="post" action="{{ path('exchange_step_5') }}">
+        <button type="submit" class="btn btn-success btn-lg">
+            Confirm & Send Verification
+        </button>
+    </form>
+
+    <a href="{{ path('exchange_step_4') }}" class="btn btn-secondary mt-3">Back</a>
+{% endif %}
+{% endblock %}

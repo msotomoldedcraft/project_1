@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ group.name }} – Group Landing{% endblock %}
+
+{% block body %}
+<h1>Welcome to the "{{ group.name }}" Group!</h1>
+
+<p>Hello {{ user.name }}, you are now a member of this group.</p>
+
+<h2>Your Wish List</h2>
+{% if user.wishlist|length > 0 %}
+    <ul>
+        {% for item in user.wishlist %}
+            <li>{{ item.name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You haven’t added any wish list items yet.</p>
+{% endif %}
+
+<div class="mt-3">
+    <a href="{{ path('wishlist_edit', {'token': user.token}) }}" class="btn btn-primary">
+        Add / Edit Your Wish List
+    </a>
+
+    <a href="{{ path('draw_names', {'token': user.token}) }}" class="btn btn-success">
+        Draw Names
+    </a>
+</div>
+
+<p class="mt-3 text-muted">Use the buttons above to manage your group participation.</p>
+{% endblock %}

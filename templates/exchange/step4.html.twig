@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Step 4 – Confirmation{% endblock %}
+
+{% block body %}
+<h1>Step 4: Confirm Your Details</h1>
+
+<p>Please review your input before sending the verification email.</p>
+
+<ul>
+    <li><strong>Name:</strong> {{ data.name }}</li>
+    <li><strong>Email:</strong> {{ data.email }}</li>
+    <li><strong>Event:</strong> {{ data.event }}</li>
+    <li><strong>Wishlist:</strong>
+        <ul>
+        {% for item in data.wishlist %}
+            <li>{{ item }}</li>
+        {% endfor %}
+        </ul>
+    </li>
+</ul>
+
+<div class="mt-3">
+    <a href="{{ path('exchange_step_3') }}" class="btn btn-secondary">Back</a>
+
+    {# Proceed to create the User and send verification #}
+    <form method="post" action="{{ path('exchange_step_5') }}">
+        <input type="hidden" name="name" value="{{ data.name }}">
+        <input type="hidden" name="email" value="{{ data.email }}">
+        <input type="hidden" name="event" value="{{ data.event }}">
+        {% for item in data.wishlist %}
+            <input type="hidden" name="wishlist[]" value="{{ item }}">
+        {% endfor %}
+        <button class="btn btn-success">Confirm & Send Verification</button>
+    </form>
+</div>
+{% endblock %}

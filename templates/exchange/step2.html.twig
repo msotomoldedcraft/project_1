@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Step 2 – Event{% endblock %}
+
+{% block body %}
+<h1>Step 2: Event Setup</h1>
+
+{{ form_start(form) }}
+    {{ form_row(form.event) }}
+
+    <a href="{{ path('exchange_step_1') }}" class="btn btn-secondary">
+        Back
+    </a>
+
+    <button class="btn btn-primary">
+        Continue
+    </button>
+{{ form_end(form) }}
+{% endblock %}

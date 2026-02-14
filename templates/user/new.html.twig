@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ form.vars.value.id ? 'Edit User' : 'Create New User' }}{% endblock %}
+
+{% block body %}
+<h1>{{ form.vars.value.id ? 'Edit User' : 'Create New User' }}</h1>
+
+{{ form_start(form) }}
+
+{{ form_row(form.name) }}
+{{ form_row(form.email) }}
+{{ form_row(form.group) }}
+
+<h4>Wishlist</h4>
+<div id="wishlist-items" data-prototype="{{ form_widget(form.wishlist.vars.prototype)|e('html_attr') }}">
+    {% for wishlistItem in form.wishlist %}
+        <div class="wishlist-item">
+            {{ form_widget(wishlistItem) }}
+            <button type="button" class="remove-wishlist-item btn btn-sm btn-danger">Remove</button>
+        </div>
+    {% endfor %}
+</div>
+<button type="button" id="add-wishlist-item" class="btn btn-primary mt-2">Add Item</button>
+
+{{ form_end(form) }}
+
+<a href="{{ path('app_user_index') }}" class="btn btn-secondary mt-3">Back to list</a>
+
+<script src="{{ asset('js/wishlist.js') }}"></script>
+{% endblock %}

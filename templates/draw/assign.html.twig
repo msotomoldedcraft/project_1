@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Assignments{% endblock %}
+
+{% block body %}
+<h1>Secret Santa Assignments</h1>
+
+<table border="1" cellpadding="5">
+    <thead>
+        <tr>
+            <th>Giver</th>
+            <th>Receiver</th>
+            <th>Receiver Wishlist</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for userId, assignedUser in assigned %}
+            <tr>
+                <td>{{ assignedUser.assignedTo ? assignedUser.assignedTo : 'N/A' }}</td>
+                <td>{{ assignedUser.name }}</td>
+                <td>
+                    {% for item in assignedUser.wishlist %}
+                        {{ item.item }}{% if not loop.last %}, {% endif %}
+                    {% else %}
+                        No wishlist items
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('app_user_index') }}">Back to Users</a>
+{% endblock %}

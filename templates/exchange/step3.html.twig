@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Step 3 – Wishlist{% endblock %}
+
+{% block body %}
+<h1>Step 3: Your Wishlist</h1>
+
+<p>Add items you would like to receive.</p>
+
+{{ form_start(form) }}
+
+<div id="wishlist-items"
+     data-prototype="{{ form_widget(form.wishlist.vars.prototype)|e('html_attr') }}">
+
+    {% for item in form.wishlist %}
+        <div class="wishlist-item">
+            {{ form_widget(item) }}
+            <button type="button"
+                    class="remove-wishlist btn btn-danger btn-sm">
+                Remove
+            </button>
+        </div>
+    {% endfor %}
+
+</div>
+
+<button type="button"
+        id="add-wishlist-item"
+        class="btn btn-primary mt-2">
+    Add Item
+</button>
+
+<br><br>
+
+<a href="{{ path('exchange_step_2') }}" class="btn btn-secondary">
+    Back
+</a>
+
+<button type="submit" class="btn btn-success">
+    Continue
+</button>
+
+{{ form_end(form) }}
+
+<script src="{{ asset('js/wishlist.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Check Your Email{% endblock %}
+
+{% block body %}
+<h1>Check Your Email</h1>
+
+<p>Please check your email for confirmation. If you didn’t receive it after <span id="countdown">5</span> seconds:</p>
+
+<form method="post" action="{{ path('exchange_step_5_resend') }}">
+    <input type="hidden" name="email" value="{{ user.email }}">
+    <button type="submit" id="resendBtn" disabled class="btn btn-primary">
+        Send Again
+    </button>
+</form>
+
+<script>
+let countdown = 5;
+const countdownEl = document.getElementById('countdown');
+const btn = document.getElementById('resendBtn');
+
+const interval = setInterval(() => {
+    countdown--;
+    countdownEl.textContent = countdown;
+    if (countdown <= 0) {
+        clearInterval(interval);
+        btn.disabled = false;
+        countdownEl.textContent = '';
+    }
+}, 1000);
+</script>
+{% endblock %}

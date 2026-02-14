@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+<h1>User index</h1>
+
+    {# Flash messages #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+        {# Run Secret Santa button #}
+        <a href="{{ path('draw_assign') }}" class="btn btn-primary mb-3">Run Secret Santa Draw</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>AssignedTo</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.assignedTo ?: '-' }}</td>
+            <td>
+                <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-secondary">Show</a>
+                <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-secondary">Edit</a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="5">No users found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('app_user_new') }}" class="btn btn-success">Create new user</a>
+{% endblock %}
