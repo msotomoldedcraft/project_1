@@ -2,32 +2,58 @@
 
 {% block title %}Step 5 – Email Verification{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/step5.css') }}">
+{% endblock %}
+
 {% block body %}
-<h1>Step 5: Email Verification</h1>
+<div class="container my-5">
+    <div class="card shadow-sm p-5 text-center verification-card">
+        <h1 class="mb-4">Submission Completed ✅</h1>
 
-{% if form is defined %}
-    {# Verification form #}
-    {% for message in app.flashes('error') %}
-        <div class="alert alert-danger">{{ message }}</div>
-    {% endfor %}
+        <p class="mx-auto mb-4" style="max-width: 600px; font-size: 18px;">
+            Please check your email for confirmation.
+            If you did not receive it, you may resend it below.
+        </p>
 
-    {{ form_start(form) }}
-    {{ form_row(form.code) }}
-    <button class="btn btn-primary">Verify</button>
-    {{ form_end(form) }}
+        <div class="d-flex justify-content-center flex-wrap gap-2 mb-3">
+            <!-- SEND AGAIN -->
+            <form method="post" action="{{ path('exchange_step_5_resend') }}" class="position-relative">
+                <input type="hidden" name="email" value="{{ user.email }}">
+                <button type="submit"
+                        id="resendBtn"
+                        class="btn btn-primary"
+                        disabled>
+                    Send Again
+                </button>
+                <div id="progressBar" class="progress position-absolute w-100" style="bottom:-8px; left:0; height:4px; border-radius:2px; background:#e9ecef;">
+                    <div id="progress" class="progress-bar" role="progressbar"
+                         style="width:0%; height:100%; transition: width 0.1s linear;"></div>
+                </div>
+            </form>
 
-    <a href="{{ path('exchange_step_4') }}" class="btn btn-secondary mt-3">Back</a>
+            <!-- CONFIRM -->
+            <a href="{{ path('exchange_confirm', {'token': user.token}) }}"
+               class="btn btn-success">
+                Confirm
+            </a>
 
-{% else %}
-    {# Confirm & Send Verification button #}
-    <p>Click below to confirm your details and receive a verification code via email.</p>
+            <!-- CREATE NEW WISHLIST -->
+            <a href="{{ path('exchange_step_1') }}"
+               class="btn btn-secondary">
+                Create New Wishlist
+            </a>
+        </div>
 
-    <form method="post" action="{{ path('exchange_step_5') }}">
-        <button type="submit" class="btn btn-success btn-lg">
-            Confirm & Send Verification
-        </button>
-    </form>
+        <p class="text-muted mt-2">
+            You can resend the email after <span id="countdown">5</span> seconds.
+        </p>
+    </div>
+</div>
+{% endblock %}
 
-    <a href="{{ path('exchange_step_4') }}" class="btn btn-secondary mt-3">Back</a>
-{% endif %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/step5.js') }}"></script>
 {% endblock %}

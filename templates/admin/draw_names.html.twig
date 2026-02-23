@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Draw Names - {{ group.name }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin_draw_names.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="draw-container">
+
+    <!-- Back Button -->
+    <div class="draw-back">
+        <button class="btn-secondary" onclick="history.back()">← Back</button>
+    </div>
+
+    <!-- Header -->
+    <div class="draw-header">
+        <h1>Draw Names for {{ group.name }}</h1>
+        <p>Select a giver and spin the wheel to assign a receiver!</p>
+    </div>
+
+    <!-- Giver Select -->
+    <div class="giver-select-box">
+        <label for="giver-select">Select a giver:</label>
+        <select id="giver-select" class="form-select">
+            <option value="">-- Select Participant --</option>
+            {% for user in users %}
+                {% if not user.assignedTo %}
+                    <option value="{{ user.id }}">{{ user.name }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Wheel Card -->
+    <div class="wheel-card">
+        <canvas id="wheel" width="400" height="400"></canvas>
+        <div id="pointer"></div>
+    </div>
+
+    <!-- Spin Button & Result -->
+    <div class="draw-actions">
+        <button id="draw-btn" class="btn-primary" disabled>Spin</button>
+        <div id="result" class="draw-result"></div>
+    </div>
+
+</div>
+
+<!-- Hidden group ID for AJAX -->
+<input type="hidden" id="group-id" value="{{ group.id }}">
+
+<script>
+    const allUsers = [
+        {% for user in users %}
+            {
+                id: {{ user.id }},
+                name: "{{ user.name|e('js') }}",
+                assignedTo: {% if user.assignedTo %}{{ user.assignedTo.id }}{% else %}null{% endif %}
+            }{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ];
+</script>
+
+<script src="{{ asset('js/admin_draw_names.js') }}"></script>
+
+{% endblock %}

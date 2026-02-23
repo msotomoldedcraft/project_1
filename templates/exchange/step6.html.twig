@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block body %}
+<div class="container text-center my-5">
+
+    <h1>Welcome {{ user.name }} 🎉</h1>
+
+    <p style="font-size:18px;">
+        You are successfully confirmed for
+        <strong>{{ group ? group.name : 'your event' }}</strong>.
+    </p>
+
+    <div class="d-flex justify-content-center flex-wrap gap-3 mt-4">
+
+        {# --- User-only actions --- #}
+        <a href="{{ path('wishlist_edit', {'token': user.token}) }}"
+           class="btn btn-primary btn-lg">
+            Edit Wishlist
+        </a>
+
+        <a href="{{ path('exchange_download', {'token': user.token}) }}"
+           class="btn btn-secondary btn-lg">
+            Download Wishlist (PDF)
+        </a>
+
+        {# --- Admin-only actions --- #}
+        {% if is_granted('ROLE_ADMIN') and group %}
+            <a href="{{ path('admin_draw_names', {'groupId': group.id}) }}"
+               class="btn btn-success btn-lg">
+                Draw Names (Admin)
+            </a>
+        {% endif %}
+
+    </div>
+
+</div>
+{% endblock %}

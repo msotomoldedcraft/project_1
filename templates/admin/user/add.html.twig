@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Participant{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin_add.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="admin-add-background">
+
+    <!-- Overlay -->
+    <div class="admin-add-overlay"></div>
+
+    <!-- Content -->
+    <div class="admin-add-container">
+
+        <div class="admin-add-header">
+            <h1>Add Participant</h1>
+            <p>Adding to group: <strong>{{ group.name }}</strong></p>
+        </div>
+
+        <div class="admin-add-card">
+            <form method="post" id="participant-form">
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" required>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="wishlist-section">
+                    <h3>Wishlist</h3>
+                    <p class="text-muted">Add as many wishlist items as needed</p>
+
+                    <div id="wishlist-container">
+                        <div class="wishlist-item">
+                            <input name="wishlist[]" placeholder="Wishlist item">
+                            <button type="button" class="remove-btn">×</button>
+                        </div>
+                    </div>
+
+                    <button type="button" class="add-btn" id="add-wishlist-btn">
+                        + Add another wishlist item
+                    </button>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">
+                        Add Participant
+                    </button>
+
+                    <a href="{{ path('admin_dashboard') }}" class="cancel-btn">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/admin_add.js') }}"></script>
+{% endblock %}

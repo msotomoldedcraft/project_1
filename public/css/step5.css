@@ -1,0 +1,13 @@
+/* Card styling for Step 5 */
+.verification-card {
+    max-width: 600px;
+}
+
+/* Optional: subtle hover effect for buttons */
+.btn {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}

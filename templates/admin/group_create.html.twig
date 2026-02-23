@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Group{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin_create_group.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="min-h-screen">
+
+    <div class="group-create-card">
+
+        <!-- Header -->
+        <h1>Create New Group</h1>
+
+        <!-- Flash messages -->
+        {% for message in app.flashes('error') %}
+            <div class="flash-message">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <!-- Form -->
+        <form method="POST">
+            <div class="form-group">
+                <label>Group Name</label>
+                <input 
+                    type="text" 
+                    name="group_name" 
+                    placeholder="Enter group name" 
+                    required
+                >
+            </div>
+
+            <button type="submit">Create Group</button>
+        </form>
+
+        <!-- Back link -->
+        <div class="text-center">
+            <a href="{{ path('admin_dashboard') }}" class="back-link">
+                ← Back to Dashboard
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="{{ asset('js/admin_create_group.js') }}"></script>
+{% endblock %}

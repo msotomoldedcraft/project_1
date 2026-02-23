@@ -1,0 +1,178 @@
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #3730a3;
+    --primary-gradient: linear-gradient(135deg, #4f46e5, #8b5cf6);
+    --success: #16a34a;
+    --danger: #dc2626;
+    --border: #e5e7eb;
+    --bg: #f3f4f6;
+    --text-dark: #111827;
+    --text-muted: #6b7280;
+}
+
+/* =========================
+   FULL PAGE BACKGROUND
+========================= */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", "Segoe UI", sans-serif;
+    min-height: 100vh;
+    background: url('../images/admin-bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(248, 250, 252, 0.85); /* soft white overlay */
+    backdrop-filter: blur(8px);
+    z-index: -1;
+}
+
+/* =========================
+   FORM CARD
+========================= */
+.group-create-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 28px;
+    padding: 50px 35px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Fade-in animation (will trigger via JS) */
+.group-create-card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hover lift */
+.group-create-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 35px 70px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================
+   HEADER
+========================= */
+.group-create-card h1 {
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 28px;
+    color: var(--primary-dark);
+    background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* =========================
+   FORM ELEMENTS
+========================= */
+.group-create-card label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 14px;
+}
+
+.group-create-card input[type="text"] {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    font-size: 15px;
+    outline: none;
+    transition: 0.25s ease;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.group-create-card input[type="text"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2);
+}
+
+/* =========================
+   BUTTON
+========================= */
+.group-create-card button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    background: var(--primary-gradient);
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+}
+
+.group-create-card button[type="submit"]:hover {
+    background: var(--primary-dark);
+    box-shadow: 0 12px 28px rgba(79, 70, 229, 0.35);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   FLASH MESSAGES
+========================= */
+.flash-message {
+    padding: 14px 18px;
+    border-radius: 16px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--danger);
+    background: rgba(252, 165, 165, 0.25);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(252, 165, 165, 0.5);
+}
+
+/* =========================
+   BACK LINK
+========================= */
+.group-create-card .back-link {
+    display: inline-block;
+    margin-top: 22px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.group-create-card .back-link:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 480px) {
+    .group-create-card {
+        padding: 35px 20px;
+    }
+
+    .group-create-card h1 {
+        font-size: 26px;
+    }
+
+    .group-create-card button[type="submit"] {
+        font-size: 15px;
+    }
+}

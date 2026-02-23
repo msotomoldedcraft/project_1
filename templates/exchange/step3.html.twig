@@ -1,46 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Step 3 – Wishlist{% endblock %}
+{% block title %}Gift Exchange – Step 3{% endblock %}
 
 {% block body %}
-<h1>Step 3: Your Wishlist</h1>
+<div class="container my-5">
+    <div class="card shadow-lg p-5 mx-auto" style="max-width:600px; border-left:5px solid #28a745;">
+        <h1 class="mb-4 text-center">Step 3: Your Wishlist</h1>
 
-<p>Add items you would like to receive.</p>
+        <p class="text-center text-muted mb-4">
+            Add the items you would like to receive. <br>
+            You can add as many as you want!
+        </p>
 
-{{ form_start(form) }}
+        {{ form_start(form) }}
 
-<div id="wishlist-items"
-     data-prototype="{{ form_widget(form.wishlist.vars.prototype)|e('html_attr') }}">
+        <div id="wishlist-items"
+             data-prototype="{{ form_widget(form.wishlist.vars.prototype)|e('html_attr') }}">
+            {% for item in form.wishlist %}
+                <div class="wishlist-item mb-2 d-flex align-items-center">
+                    {{ form_widget(item, {'attr': {'class': 'form-control me-2'}}) }}
+                    <button type="button" class="remove-wishlist btn btn-outline-danger btn-sm ms-2">Remove</button>
+                </div>
+            {% endfor %}
+        </div>
 
-    {% for item in form.wishlist %}
-        <div class="wishlist-item">
-            {{ form_widget(item) }}
-            <button type="button"
-                    class="remove-wishlist btn btn-danger btn-sm">
-                Remove
+        <button type="button" id="add-wishlist-item" class="btn btn-outline-primary mt-3">
+            + Add Item
+        </button>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{{ path('exchange_step_2') }}" class="btn btn-secondary btn-lg">
+                ← Back
+            </a>
+            <button type="submit" class="btn btn-success btn-lg">
+                Continue →
             </button>
         </div>
-    {% endfor %}
 
+        {{ form_end(form) }}
+    </div>
 </div>
+{% endblock %}
 
-<button type="button"
-        id="add-wishlist-item"
-        class="btn btn-primary mt-2">
-    Add Item
-</button>
-
-<br><br>
-
-<a href="{{ path('exchange_step_2') }}" class="btn btn-secondary">
-    Back
-</a>
-
-<button type="submit" class="btn btn-success">
-    Continue
-</button>
-
-{{ form_end(form) }}
-
-<script src="{{ asset('js/wishlist.js') }}"></script>
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/wishlist.js') }}"></script>
 {% endblock %}

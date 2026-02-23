@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="login-page">
+
+    <!-- LEFT HERO SECTION -->
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>Welcome Back!</h1>
+            <p>
+                Sign in to continue your Secret Exchange experience.
+                Manage your wishlist, join groups, and enjoy the surprise!
+            </p>
+        </div>
+    </div>
+
+    <!-- RIGHT LOGIN CARD -->
+    <div class="login-section">
+        <div class="login-card">
+
+            <h2>Login</h2>
+
+            {% if error %}
+                <div class="error-message">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+
+            <form action="{{ path('app_login') }}" method="post">
+
+                <div class="input-group">
+                    <label for="username">Email</label>
+                    <input type="text"
+                           id="username"
+                           name="_username"
+                           value="{{ last_username }}"
+                           required autofocus>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password"
+                           id="password"
+                           name="_password"
+                           required>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    Sign In
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="{{ asset('js/login.js') }}"></script>
+{% endblock %}

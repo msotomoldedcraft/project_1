@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ group.name }} Results{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/admin_results.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="results-container">
+
+    <!-- Header -->
+    <div class="results-header">
+        <h1>Draw Results for {{ group.name }}</h1>
+        <a href="{{ path('admin_dashboard') }}" class="btn-secondary">Back to Dashboard</a>
+    </div>
+
+    <!-- Card Table -->
+    <div class="results-card">
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>Giver</th>
+                    <th>Receiver</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td class="giver">{{ user.name }}</td>
+                    <td class="receiver">
+                        {% if user.assignedTo %}
+                            {{ user.assignedTo.name }}
+                        {% else %}
+                            <span class="not-assigned">Not assigned</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script src="{{ asset('js/admin_results.js') }}"></script>
+
+{% endblock %}

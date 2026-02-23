@@ -1,19 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Step 2 – Event{% endblock %}
+{% block title %}Gift Exchange – Step 2{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/step2.css') }}">
+{% endblock %}
 
 {% block body %}
-<h1>Step 2: Event Setup</h1>
+<div class="container my-5">
+    <div class="card shadow-lg p-5 mx-auto event-setup-card">
+        <h1 class="mb-4 text-center">Step 2: Event Setup</h1>
 
-{{ form_start(form) }}
-    {{ form_row(form.event) }}
+        <p class="text-center text-muted mb-4">
+            Tell us what event you’re organizing. <br>
+            e.g. Christmas Gifts, Valentine’s Day, Birthday Exchange
+        </p>
 
-    <a href="{{ path('exchange_step_1') }}" class="btn btn-secondary">
-        Back
-    </a>
+        {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_label(form.event) }}
+                {{ form_widget(form.event, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.event) }}
+            </div>
 
-    <button class="btn btn-primary">
-        Continue
-    </button>
-{{ form_end(form) }}
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{{ path('exchange_step_1') }}" class="btn btn-outline-secondary btn-lg">
+                    ← Back
+                </a>
+
+                <button type="submit" class="btn btn-purple btn-lg text-white continue-btn">
+                    Continue →
+                </button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>
 {% endblock %}

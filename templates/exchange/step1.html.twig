@@ -3,12 +3,27 @@
 {% block title %}Gift Exchange – Step 1{% endblock %}
 
 {% block body %}
-<h1>Step 1: Your Information</h1>
+<div class="container my-5">
+    <div class="card shadow-sm p-5 mx-auto" style="max-width: 500px;">
+        <h1 class="mb-4 text-center">Step 1: Your Information</h1>
 
-{{ form_start(form) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.email) }}
+        {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.name) }}
+            </div>
 
-    <button class="btn btn-primary">Continue</button>
-{{ form_end(form) }}
+            <div class="mb-3">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.email) }}
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg">Continue</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>
 {% endblock %}

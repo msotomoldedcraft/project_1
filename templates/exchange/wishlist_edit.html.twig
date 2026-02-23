@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Wishlist{% endblock %}
+
+{% block body %}
+<h1>Edit Your Wishlist</h1>
+
+{{ form_start(form) }}
+
+<div id="wishlist-items" data-prototype="{{ form_widget(form.wishlist.vars.prototype)|e('html_attr') }}">
+    {% for item in form.wishlist %}
+        <div class="wishlist-item d-flex align-items-center mb-2">
+            {{ form_widget(item, {'attr': {'class': 'form-control me-2'}}) }}
+            <button type="button" class="remove-wishlist btn btn-danger btn-sm ms-2">Remove</button>
+        </div>
+    {% endfor %}
+</div>
+
+<button type="button" id="add-wishlist-item" class="btn btn-primary mt-2">Add Item</button>
+
+<div class="mt-3">
+    <button type="submit" class="btn btn-success">Update Wishlist</button>
+    <a href="{{ path('exchange_step_6', {'token': user.token}) }}" class="btn btn-secondary">Cancel</a>
+</div>
+
+{{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/wishlist.js') }}"></script>
+{% endblock %}

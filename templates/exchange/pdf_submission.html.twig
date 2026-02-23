@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Secret Exchange Submission</title>
+    <link rel="stylesheet" href="{{ asset('css/pdf_submission.css') }}">
+</head>
+<body>
+    <h1>Secret Exchange Submission</h1>
+    <hr>
+    <p><strong>Name:</strong> {{ user.name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Event:</strong> {{ group ? group.name : 'N/A' }}</p>
+
+    <h3>Wishlist Items:</h3>
+    <ul>
+        {% if wishlist|length > 0 %}
+            {% for item in wishlist %}
+                <li>{{ item.name }}</li>
+            {% endfor %}
+        {% else %}
+            <li>No wishlist items added.</li>
+        {% endif %}
+    </ul>
+</body>
+</html>

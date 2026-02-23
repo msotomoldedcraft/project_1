@@ -1,0 +1,10 @@
+/* Style for the card border */
+.event-setup-card {
+    max-width: 500px;
+    border-left: 5px solid #6f42c1;
+}
+
+/* Style for the Continue button */
+.continue-btn {
+    background-color: #6f42c1;
+}
