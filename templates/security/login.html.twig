@@ -3,64 +3,77 @@
 {% block title %}Login{% endblock %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 {% endblock %}
 
 {% block body %}
+
 <div class="login-page">
 
-    <!-- LEFT HERO SECTION -->
-    <div class="hero-section">
-        <div class="hero-content">
-            <h1>Welcome Back!</h1>
-            <p>
-                Sign in to continue your Secret Exchange experience.
-                Manage your wishlist, join groups, and enjoy the surprise!
-            </p>
-        </div>
-    </div>
+    <div class="grid-container">
+        <div class="grid-x align-middle login-wrapper">
 
-    <!-- RIGHT LOGIN CARD -->
-    <div class="login-section">
-        <div class="login-card">
-
-            <h2>Login</h2>
-
-            {% if error %}
-                <div class="error-message">
-                    {{ error.messageKey|trans(error.messageData, 'security') }}
+            <!-- LEFT HERO -->
+            <div class="cell small-12 large-6 login-hero">
+                <div class="hero-content">
+                    <h1>Secret Exchange</h1>
+                    <p>
+                        Welcome back.  
+                        Sign in to manage groups, participants, and drawings.
+                    </p>
                 </div>
-            {% endif %}
+            </div>
 
-            <form action="{{ path('app_login') }}" method="post">
+            <!-- RIGHT LOGIN -->
+            <div class="cell small-12 large-6">
 
-                <div class="input-group">
-                    <label for="username">Email</label>
-                    <input type="text"
-                           id="username"
-                           name="_username"
-                           value="{{ last_username }}"
-                           required autofocus>
+                <div class="callout login-card">
+
+                    <h3 class="text-center">Sign In</h3>
+
+                    {% if error %}
+                        <div class="callout alert">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+
+                    <form action="{{ path('app_login') }}" method="post">
+
+                        <label>
+                            Email
+                            <input type="text"
+                                   name="_username"
+                                   value="{{ last_username }}"
+                                   required
+                                   autofocus>
+                        </label>
+
+                        <label>
+                            Password
+                            <input type="password"
+                                   name="_password"
+                                   required>
+                        </label>
+
+                        <button type="submit" class="button primary expanded">
+                            Login
+                        </button>
+
+                    </form>
+
                 </div>
 
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <input type="password"
-                           id="password"
-                           name="_password"
-                           required>
-                </div>
-
-                <button type="submit" class="login-btn">
-                    Sign In
-                </button>
-
-            </form>
+            </div>
 
         </div>
     </div>
 
 </div>
 
-<script src="{{ asset('js/login.js') }}"></script>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/login.js') }}"></script>
 {% endblock %}

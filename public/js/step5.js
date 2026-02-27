@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+
     let countdown = 5;
     const countdownEl = document.getElementById('countdown');
     const btn = document.getElementById('resendBtn');
@@ -6,10 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const total = countdown;
 
     const interval = setInterval(() => {
+
         countdown--;
         countdownEl.textContent = countdown;
 
-        // Animate progress bar
         const progressPercent = ((total - countdown) / total) * 100;
         progress.style.width = progressPercent + '%';
 
@@ -19,5 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             countdownEl.textContent = "0";
             progress.style.width = '100%';
         }
+
     }, 1000);
+
 });

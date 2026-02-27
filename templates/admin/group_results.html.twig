@@ -3,43 +3,58 @@
 {% block title %}{{ group.name }} Results{% endblock %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/admin_results.css') }}">
 {% endblock %}
 
 {% block body %}
 
-<div class="results-container">
+<div class="grid-container results-container">
 
     <!-- Header -->
-    <div class="results-header">
-        <h1>Draw Results for {{ group.name }}</h1>
-        <a href="{{ path('admin_dashboard') }}" class="btn-secondary">Back to Dashboard</a>
+    <div class="grid-x grid-padding-x align-justify align-middle">
+        <div class="cell small-12 medium-8">
+            <h2>Draw Results for {{ group.name }}</h2>
+        </div>
+
+        <div class="cell small-12 medium-4 text-right">
+            <a href="{{ path('admin_dashboard') }}"
+               class="button secondary small">
+                Back to Dashboard
+            </a>
+        </div>
     </div>
 
-    <!-- Card Table -->
+    <hr>
+
+    <!-- Card -->
     <div class="results-card">
-        <table class="results-table">
+
+        <table class="hover stack">
             <thead>
                 <tr>
                     <th>Giver</th>
                     <th>Receiver</th>
                 </tr>
             </thead>
+
             <tbody>
-            {% for user in users %}
-                <tr>
-                    <td class="giver">{{ user.name }}</td>
-                    <td class="receiver">
-                        {% if user.assignedTo %}
-                            {{ user.assignedTo.name }}
-                        {% else %}
-                            <span class="not-assigned">Not assigned</span>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
+                {% for user in users %}
+                    <tr>
+                        <td class="giver">{{ user.name }}</td>
+                        <td class="receiver">
+                            {% if user.assignedTo %}
+                                {{ user.assignedTo.name }}
+                            {% else %}
+                                <span class="not-assigned">Not assigned</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
+
         </table>
+
     </div>
 
 </div>

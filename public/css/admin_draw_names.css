@@ -1,195 +1,230 @@
-:root {
-    --primary: #4f46e5;
-    --primary-dark: #3730a3;
-    --success: #1eec0b;
-    --danger: #dc2626;
-    --border: #e5e7eb;
-    --bg: #f8fafc;
-    --text-dark: #111827;
-    --text-muted: #6b7280;
-}
+/* ==============================
+   PAGE BASE
+================================= */
 
 body {
-    margin: 0;
     font-family: "Inter", "Segoe UI", sans-serif;
-    color: var(--text-dark);
-    min-height: 100vh;
-    position: relative;
-    overflow: hidden; /* remove scrollbars */
-    display: flex;
-    align-items: center; /* vertical centering */
-    justify-content: center; /* horizontal centering */
+    background: #ffffff;
+    margin: 0;
 }
 
-/* FULLSCREEN BACKGROUND IMAGE WITH BLUR & OPACITY */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-image: url('/images/admindrawname.jpg'); /* change to your image path */
+
+/* ==============================
+   OPTIONAL IMAGE MODE
+   (Uncomment if needed)
+================================= */
+
+/*
+body.image-mode {
+    background: url("../images/admindrawname.jpg") no-repeat center center;
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: blur(1px);
-    opacity: 0.5;
-    z-index: -2;
+    position: relative;
 }
 
-/* DARK GRADIENT OVERLAY */
-body::after {
+body.image-mode::before {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.4));
-    z-index: -1;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index: 0;
 }
+*/
 
-/* MAIN DRAW CONTAINER */
+
+/* ==============================
+   MAIN CONTAINER
+================================= */
+
 .draw-container {
+    min-height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 1rem;
     position: relative;
-    max-width: 800px;
-    width: 90%;
-    padding: 40px 20px;
-    text-align: center;
     z-index: 1;
 }
 
-/* BACK BUTTON */
-.draw-back {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 2;
+
+/* Header */
+
+.draw-container h2 {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
 }
 
-.btn-secondary {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px 14px;
-    cursor: pointer;
-    font-size: 13px;
-    z-index: 2;
+.draw-container p {
+    color: #6b7280;
+    margin-bottom: 2rem;
 }
 
-.btn-secondary:hover {
-    background: #f3f4f6;
+
+/* ==============================
+   SELECT DROPDOWN
+================================= */
+
+select {
+    border-radius: 12px;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    transition: all 0.25s ease;
 }
 
-/* HEADER */
-.draw-header h1 {
-    font-size: 32px;
-    margin-bottom: 8px;
-    color: white;
-    z-index: 2;
-}
-
-.draw-header p {
-    font-size: 16px;
-    color: rgba(255,255,255,0.85);
-    margin-bottom: 25px;
-    z-index: 2;
-}
-
-/* GIVER SELECT */
-.giver-select-box {
-    margin-bottom: 30px;
-    z-index: 2;
-    display: flex;
-    flex-direction: column; /* stack label on top of select */
-    align-items: center; /* keep dropdown centered horizontally */
-}
-
-.giver-select-box label {
-    font-size: 14px;
-    font-weight: 600;
-    color: white; /* or rgba(255,255,255,0.9) if dark bg */
-    margin-bottom: 6px; /* small gap between label and select */
-}
-
-.form-select {
-    width: 250px;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    font-size: 14px;
-}
-
-.form-select:focus {
+select:focus {
+    border-color: #6366f1;
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(79,70,229,0.2);
+    box-shadow: 0 6px 20px rgba(99,102,241,0.15);
 }
 
-/* WHEEL CARD */
-.wheel-card {
+
+/* ==============================
+   WHEEL SECTION
+================================= */
+
+.wheel-wrapper {
     position: relative;
-    width: 400px;
-    height: 400px;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+
+/* Wheel card */
+
+.wheel-card {
+    width: 420px;
+    height: 420px;
+    max-width: 90vw;
+    max-height: 90vw;
+
+    background: #ffffff;
     border-radius: 50%;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-    background: rgba(255,255,255,0.9); /* allow background to show slightly */
+
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
-    z-index: 2;
+
+    border: 1px solid #f1f1f1;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+
+    transition: all 0.3s ease;
 }
+
+/* Hover only on desktop */
+@media (hover: hover) and (pointer: fine) {
+    .wheel-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 55px rgba(0, 0, 0, 0.1);
+    }
+}
+
+
+/* Canvas */
 
 #wheel {
-    border: 5px solid var(--primary-dark);
     border-radius: 50%;
+    border: 5px solid #4338ca;
+    width: 100%;
+    height: 100%;
 }
 
-/* SPIN BUTTON */
-.draw-actions {
-    margin-top: 20px;
-    z-index: 2;
+
+/* Pointer (KEEP bottom:30px) */
+
+.wheel-pointer {
+    position: absolute;
+    bottom: 10px;   /* as requested */
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 0;
+    height: 0;
+
+    border-left: 18px solid transparent;
+    border-right: 18px solid transparent;
+    border-bottom: 30px solid #ef4444;
+
+    z-index: 10;
 }
 
-.btn-primary {
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 12px 30px;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.2s ease;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+
+/* ==============================
+   BUTTONS
+================================= */
+
+.button.primary {
+    background: #6366f1;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.25s ease;
 }
 
-.btn-primary:hover {
-    background: var(--primary-dark);
+.button.primary:hover {
+    background: #4f46e5;
 }
+
+
+.button.secondary {
+    background: #ffffff;
+    color: #6b6b6b;
+    border: 1.5px solid #858383;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.button.secondary:hover {
+    background: #686666;
+    color: #ffffff;
+}
+
+
+/* ==============================
+   RESULT TEXT
+================================= */
 
 .draw-result {
-    margin-top: 20px;
-    font-size: 20px;
+    margin-top: 1.8rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    color: var(--success);
-    z-index: 2;
+    color: #ffffff;
+    background: linear-gradient(135deg, #6366f1, #4f8ef3);
+    padding: 0.8rem 1.4rem;
+    border-radius: 12px;
+    display: inline-block;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    animation: fadeIn 0.4s ease;
 }
 
-/* RESPONSIVE */
-@media (max-width: 500px) {
+
+/* ==============================
+   ANIMATION
+================================= */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ==============================
+   MOBILE FIX
+================================= */
+
+@media (max-width: 768px) {
+
     .wheel-card {
         width: 300px;
         height: 300px;
     }
 
-    #wheel {
-        width: 300px;
-        height: 300px;
-    }
-
-    .form-select {
-        width: 200px;
-    }
 }

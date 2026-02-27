@@ -1,8 +1,8 @@
-/* Page background */
+/* Page base */
 
 body {
     font-family: "Inter", "Segoe UI", sans-serif;
-    background: url("../images/adminresults.jpg") no-repeat center center;
+    background: url("../images/aboutsecretexchange.jpg") no-repeat center center;
     background-size: cover;
     position: relative;
 }
@@ -21,19 +21,19 @@ body::before {
 }
 
 
-/* Layout spacing */
+/* Keep content above overlay */
 
 .step-container {
-    margin: 5rem auto;
     position: relative;
     z-index: 1;
+    margin: 5rem auto;
 }
 
 
 /* Card */
 
 .step-card {
-    border-radius: 16px;
+    border-radius: 18px;
     padding: 3rem;
     background: #ffffff;
     border: 1px solid #f1f1f1;
@@ -51,23 +51,22 @@ body::before {
 
 /* Header */
 
-.step-header h4 {
-    font-size: 1.4rem;
+.step-card h3 {
     font-weight: 700;
     margin-bottom: 0.75rem;
 }
 
-.step-header h4::after {
+.step-card h3::after {
     content: "";
     display: block;
-    width: 40px;
+    width: 45px;
     height: 3px;
     margin: 0.6rem auto 0;
-    background: #4f46e5;
+    background: #16a34a;
     border-radius: 2px;
 }
 
-.step-header p {
+.step-card p {
     color: #6b7280;
     font-size: 0.95rem;
     margin-top: 1.5rem;
@@ -75,28 +74,45 @@ body::before {
 }
 
 
+/* Wishlist item */
+
+.wishlist-item {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .wishlist-item:hover {
+        background: #f3f4f6;
+        transform: scale(1.01);
+    }
+}
+
+
 /* Inputs */
 
 .step-card input,
-.step-card select,
 .step-card textarea {
-    border-radius: 10px;
+    border-radius: 8px;
     border: 1px solid #e5e7eb;
     transition: all 0.2s ease;
 }
 
 .step-card input:focus,
-.step-card select:focus,
 .step-card textarea:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
     outline: none;
 }
 
 
 /* Buttons */
 
-/* Back button */
+/* Back */
 
 .button.secondary {
     background: #ffffff;
@@ -113,24 +129,57 @@ body::before {
 }
 
 
-/* Primary button */
+/* Continue */
 
-.button.primary {
+.button.success {
     background: #ffffff;
-    color: #647af7;
+    color: #958ef5;
     border: 1.5px solid #f88484;
     border-radius: 10px;
     font-weight: 600;
     transition: all 0.25s ease;
 }
 
-.button.primary:hover {
+.button.success:hover {
     background: #f88484;
     color: #ffffff;
 }
 
 
-/* Mobile fixes */
+/* Remove */
+
+.button.alert.small {
+    background: #ffffff;
+    color: #dc2626;
+    border: 1.5px solid #dc2626;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.button.alert.small:hover {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+
+/* Add item */
+
+#add-wishlist-item {
+    background: #ffffff;
+    color: #16a34a;
+    border: 1.5px solid #16a34a;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+#add-wishlist-item:hover {
+    background: #16a34a;
+    color: #ffffff;
+}
+
+
+/* Mobile */
 
 @media (max-width: 768px) {
 

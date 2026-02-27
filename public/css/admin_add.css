@@ -1,179 +1,86 @@
-/* =========================
-   Background Layer
-========================= */
+/* Background */
 
 .admin-add-background {
     position: relative;
     min-height: 100vh;
     background: url("../images/addparticipant.jpg") no-repeat center center;
     background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
 }
 
-/* Blur Layer */
+
+/* Overlay */
+
 .admin-add-background::before {
     content: "";
     position: absolute;
     inset: 0;
-    backdrop-filter: blur(8px);
-    background: rgba(167, 148, 148, 0.35); /* opacity layer */
-    z-index: 1;
+
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    z-index: 0;
 }
 
-/* Overlay Container (keeps content above blur) */
-.admin-add-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-}
 
-/* Content */
+/* Content layer */
+
 .admin-add-container {
     position: relative;
-    z-index: 2;
-    width: 100%;
-    max-width: 800px;
-    padding: 40px 20px;
+    z-index: 1;
+
+    padding: 60px 20px;
 }
 
-/* =========================
-   Page Layout
-========================= */
-.admin-add-container {
-    max-width: 800px;
-    margin: 60px auto;
-    padding: 20px;
+
+/* Header text */
+
+.admin-add-container h2 {
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
 }
 
-.admin-add-header h1 {
-    margin-bottom: 5px;
+.admin-add-container p {
+    color: #e2e8f0;
+    font-size: 1rem;
+    margin-bottom: 2rem;
 }
 
-.admin-add-header p {
-    color: #666;
-    margin-bottom: 30px;
+.admin-add-container p strong {
+    color: #d1d1d1;
+    font-weight: 700;
 }
 
-/* =========================
-   Card
-========================= */
-.admin-add-card {
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-}
 
-/* =========================
-   Form Sections
-========================= */
-.form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    margin-bottom: 6px;
-    font-weight: 600;
-}
-
-.form-group input {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    transition: 0.2s ease;
-}
-
-.form-group input:focus {
-    border-color: #7c3aed;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
-}
-
-/* =========================
-   Wishlist
-========================= */
-.wishlist-section {
-    margin-top: 20px;
-}
+/* Wishlist spacing */
 
 .wishlist-item {
-    display: flex;
-    gap: 10px;
     margin-bottom: 10px;
 }
 
-.wishlist-item input {
-    flex: 1;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+
+/* Buttons */
+
+.button {
+    border-radius: 10px;
+    transition: all 0.2s ease;
 }
 
-.add-btn {
-    margin-top: 10px;
-    padding: 8px 14px;
-    border: none;
-    background: #6b7280;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s;
+/* Hover only on desktop */
+@media (hover: hover) and (pointer: fine) {
+    .button:hover {
+        transform: translateY(-2px);
+    }
 }
 
-.add-btn:hover {
-    background: #4b5563;
-}
 
-.remove-btn {
-    background: #ef4444;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 0 12px;
-    cursor: pointer;
-}
+/* Mobile */
 
-.remove-btn:hover {
-    background: #dc2626;
-}
+@media (max-width: 768px) {
 
-/* =========================
-   Buttons
-========================= */
-.form-actions {
-    margin-top: 30px;
-    display: flex;
-    gap: 15px;
-}
+    .admin-add-container {
+        padding: 40px 15px;
+    }
 
-.submit-btn {
-    background: #16a34a;
-    color: white;
-    padding: 10px 18px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.submit-btn:hover {
-    background: #15803d;
-}
-
-.cancel-btn {
-    padding: 10px 18px;
-    border-radius: 8px;
-    text-decoration: none;
-    border: 1px solid #999;
-    color: #333;
-    transition: 0.2s;
-}
-
-.cancel-btn:hover {
-    background: #f3f4f6;
 }

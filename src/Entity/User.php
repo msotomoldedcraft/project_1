@@ -47,7 +47,7 @@ class User implements UserInterface
     private $wishlist;
 
     /**
-     * ✅ ASSIGNED RECEIVER (DRAW RESULT)
+     *  ASSIGNED RECEIVER (DRAW RESULT)
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */

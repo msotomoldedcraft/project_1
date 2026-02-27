@@ -3,71 +3,100 @@
 {% block title %}Add Participant{% endblock %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/admin_add.css') }}">
 {% endblock %}
 
 {% block body %}
+
 <div class="admin-add-background">
 
-    <!-- Overlay -->
-    <div class="admin-add-overlay"></div>
+    <div class="grid-container admin-add-container">
 
-    <!-- Content -->
-    <div class="admin-add-container">
+        <div class="grid-x align-center">
 
-        <div class="admin-add-header">
-            <h1>Add Participant</h1>
-            <p>Adding to group: <strong>{{ group.name }}</strong></p>
-        </div>
+            <div class="cell small-12 medium-8">
 
-        <div class="admin-add-card">
-            <form method="post" id="participant-form">
+                <h2>Add Participant</h2>
+                <p>Adding to group: <strong>{{ group.name }}</strong></p>
 
-                <div class="form-section">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input id="name" name="name" required>
-                    </div>
+                <div class="callout">
 
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input id="email" name="email" type="email" required>
-                    </div>
-                </div>
+                    <form method="post" id="participant-form">
 
-                <hr>
+                        <!-- NAME -->
+                        <label>Name
+                            <input type="text" name="name" required>
+                        </label>
 
-                <div class="wishlist-section">
-                    <h3>Wishlist</h3>
-                    <p class="text-muted">Add as many wishlist items as needed</p>
+                        <!-- EMAIL -->
+                        <label>Email
+                            <input type="email" name="email" required>
+                        </label>
 
-                    <div id="wishlist-container">
-                        <div class="wishlist-item">
-                            <input name="wishlist[]" placeholder="Wishlist item">
-                            <button type="button" class="remove-btn">×</button>
+                        <hr>
+
+                        <!-- WISHLIST -->
+                        <h4>Wishlist</h4>
+                        <p class="help-text">
+                            Add as many wishlist items as needed
+                        </p>
+
+                        <div id="wishlist-container">
+
+                            <div class="grid-x grid-margin-x align-middle wishlist-item">
+                                <div class="cell auto">
+                                    <input type="text" name="wishlist[]" placeholder="Wishlist item">
+                                </div>
+                                <div class="cell shrink">
+                                    <button type="button"
+                                            class="button alert tiny remove-btn">
+                                        ×
+                                    </button>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
 
-                    <button type="button" class="add-btn" id="add-wishlist-btn">
-                        + Add another wishlist item
-                    </button>
+                        <button type="button"
+                                class="button secondary"
+                                id="add-wishlist-btn">
+                            + Add another wishlist item
+                        </button>
+
+                        <hr>
+
+                        <!-- ACTIONS -->
+                        <div class="grid-x grid-margin-x">
+
+                            <div class="cell auto">
+                                <button type="submit"
+                                        class="button success expanded">
+                                    Add Participant
+                                </button>
+                            </div>
+
+                            <div class="cell auto">
+                                <a href="{{ path('admin_dashboard') }}"
+                                   class="button secondary expanded">
+                                    Cancel
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </form>
+
                 </div>
 
-                <div class="form-actions">
-                    <button type="submit" class="submit-btn">
-                        Add Participant
-                    </button>
+            </div>
 
-                    <a href="{{ path('admin_dashboard') }}" class="cancel-btn">
-                        Cancel
-                    </a>
-                </div>
-
-            </form>
         </div>
 
     </div>
+
 </div>
+
 {% endblock %}
 
 {% block javascripts %}

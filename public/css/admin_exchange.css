@@ -1,0 +1,36 @@
+/* Base font */
+
+body {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    overflow-x: hidden;
+}
+
+
+/* Page spacing */
+
+.grid-container {
+    margin-top: 2rem;
+}
+
+
+/* Table style */
+
+table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+}
+
+
+/* Make table scroll on small screens */
+
+@media (max-width: 768px) {
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+}

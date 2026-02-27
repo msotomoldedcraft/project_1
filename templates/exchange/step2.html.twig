@@ -4,36 +4,62 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/step2.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('css/step2.css') }}">
 {% endblock %}
 
 {% block body %}
-<div class="container my-5">
-    <div class="card shadow-lg p-5 mx-auto event-setup-card">
-        <h1 class="mb-4 text-center">Step 2: Event Setup</h1>
 
-        <p class="text-center text-muted mb-4">
-            Tell us what event you’re organizing. <br>
-            e.g. Christmas Gifts, Valentine’s Day, Birthday Exchange
-        </p>
+<div class="grid-container step-container">
 
-        {{ form_start(form) }}
-            <div class="mb-3">
-                {{ form_label(form.event) }}
-                {{ form_widget(form.event, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.event) }}
+    <div class="grid-x align-center">
+
+        <div class="cell small-12 medium-6 large-5">
+
+            <div class="callout step-card">
+
+                <div class="step-header text-center">
+                    <h4>Event Setup</h4>
+                    <p>
+                        Tell us what event you’re organizing.<br>
+                        e.g. Christmas Gifts, Valentine’s Day, Birthday Exchange
+                    </p>
+                </div>
+
+                {{ form_start(form) }}
+
+                    <label>
+                        {{ form_label(form.event) }}
+                        {{ form_widget(form.event) }}
+                        {{ form_errors(form.event) }}
+                    </label>
+
+                    <div class="grid-x grid-padding-x align-justify">
+
+                        <div class="cell shrink">
+                            <a href="{{ path('exchange_step_1') }}"
+                               class="button secondary">
+                                ← Back
+                            </a>
+                        </div>
+
+                        <div class="cell shrink">
+                            <button type="submit"
+                                    class="button primary">
+                                Continue →
+                            </button>
+                        </div>
+
+                    </div>
+
+                {{ form_end(form) }}
+
             </div>
 
-            <div class="d-flex justify-content-between mt-4">
-                <a href="{{ path('exchange_step_1') }}" class="btn btn-outline-secondary btn-lg">
-                    ← Back
-                </a>
+        </div>
 
-                <button type="submit" class="btn btn-purple btn-lg text-white continue-btn">
-                    Continue →
-                </button>
-            </div>
-        {{ form_end(form) }}
     </div>
+
 </div>
+
 {% endblock %}

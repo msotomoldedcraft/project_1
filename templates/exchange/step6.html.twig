@@ -1,39 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home Page{% endblock %}
+{% block title %}Welcome{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/step6.css') }}">
+{% endblock %}
 
 {% block body %}
-<div class="container text-center my-5">
 
-    <h1>Welcome {{ user.name }} 🎉</h1>
+<div class="step6-wrapper">
 
-    <p style="font-size:18px;">
-        You are successfully confirmed for
-        <strong>{{ group ? group.name : 'your event' }}</strong>.
-    </p>
+    <div class="grid-container">
 
-    <div class="d-flex justify-content-center flex-wrap gap-3 mt-4">
+        <div class="grid-x align-center">
 
-        {# --- User-only actions --- #}
-        <a href="{{ path('wishlist_edit', {'token': user.token}) }}"
-           class="btn btn-primary btn-lg">
-            Edit Wishlist
-        </a>
+            <div class="cell small-12 medium-9 large-7">
 
-        <a href="{{ path('exchange_download', {'token': user.token}) }}"
-           class="btn btn-secondary btn-lg">
-            Download Wishlist (PDF)
-        </a>
+                <div class="welcome-card">
 
-        {# --- Admin-only actions --- #}
-        {% if is_granted('ROLE_ADMIN') and group %}
-            <a href="{{ path('admin_draw_names', {'groupId': group.id}) }}"
-               class="btn btn-success btn-lg">
-                Draw Names (Admin)
-            </a>
-        {% endif %}
+                    <div class="welcome-header text-center">
+                        <h2>Welcome, {{ user.name }}</h2>
+
+                        <p>
+                            You are confirmed for
+                            <strong>{{ group ? group.name : 'your event' }}</strong>.
+                        </p>
+                    </div>
+
+                    <div class="welcome-actions">
+
+                        <a href="{{ path('wishlist_edit', {'token': user.token}) }}"
+                           class="button primary expanded">
+                            Edit Wishlist
+                        </a>
+
+                        <a href="{{ path('exchange_download', {'token': user.token}) }}"
+                           class="button secondary expanded">
+                            Download PDF
+                        </a>
+
+                        <a href="{{ path('group_results') }}"
+                           class="button secondary expanded">
+                            View Results
+                        </a>
+
+                        {% if is_granted('ROLE_ADMIN') and group %}
+                            <a href="{{ path('admin_draw_names', {'groupId': group.id}) }}"
+                               class="button success expanded">
+                                Draw Names (Admin)
+                            </a>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
 </div>
+
 {% endblock %}

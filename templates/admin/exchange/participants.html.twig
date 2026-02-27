@@ -4,42 +4,72 @@
     Participants - {{ group.name }}
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/admin_exchange.css') }}">
+{% endblock %}
+
 {% block body %}
-<div class="container my-5">
 
-    <h1>Participants for {{ group.name }}</h1>
+<div class="grid-container">
 
-    <table class="table table-striped mt-4">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Wishlist Count</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
-                <tr>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.wishlist|length }}</td>
-                    <td>
-                        <a href="{{ path('admin_exchange_download', {'userId': user.id}) }}"
-                           class="btn btn-sm btn-secondary">
-                            Download PDF
-                        </a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="4" class="text-center">
-                        No participants found.
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <!-- Header -->
+    <div class="grid-x grid-padding-x align-justify align-middle">
+        <div class="cell small-12 medium-8">
+            <h2>Participants for {{ group.name }}</h2>
+        </div>
+
+        <div class="cell small-12 medium-4 text-right">
+            <a href="{{ path('admin_dashboard') }}"
+               class="button secondary small">
+                Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Table -->
+    <div class="grid-x grid-padding-x">
+        <div class="cell small-12">
+
+            <table class="hover stack">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Wishlist Count</th>
+                        <th width="150">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.wishlist|length }}</td>
+                            <td>
+                                <a href="{{ path('admin_exchange_download', {'userId': user.id}) }}"
+                                   class="button tiny primary">
+                                    Download PDF
+                                </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                No participants found.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
 
 </div>
+
 {% endblock %}

@@ -1,5 +1,131 @@
-/* Card border style for Step 4 */
-.confirmation-card {
-    max-width: 600px;
-    border-left: 5px solid #28a745;
+/* Base */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: "Inter", "Segoe UI", sans-serif;
+    background: #ffffff;
+    overflow-x: hidden;
+}
+
+
+/* Container */
+
+.step-container {
+    min-height: calc(100vh - 140px);
+    padding: 2rem 1rem;
+}
+
+
+/* Card */
+
+.step-card {
+    border-radius: 20px;
+    padding: 2.5rem;
+    background: #ffffff;
+    border: 1px solid #f1f1f1;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+/* Hover only on desktop */
+@media (hover: hover) and (pointer: fine) {
+    .step-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 55px rgba(0, 0, 0, 0.08);
+    }
+}
+
+
+/* Remove Foundation spacing */
+
+.callout {
+    margin-bottom: 0;
+}
+
+
+/* Header text */
+
+.step-card h3 {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.step-card p {
+    color: #6b7280;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+
+/* List */
+
+.step-card ul {
+    padding-left: 1.2rem;
+}
+
+.step-card li {
+    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+}
+
+
+/* Divider */
+
+.step-card hr {
+    margin: 1.5rem 0;
+    border-color: #f1f1f1;
+}
+
+
+/* Buttons */
+
+.button {
+    border-radius: 10px;
+    transition: all 0.25s ease;
+}
+
+
+/* Secondary */
+
+.button.secondary {
+    background: #ffffff;
+    color: #6b6b6b;
+    border: 1.5px solid #858383;
+    font-weight: 600;
+}
+
+.button.secondary:hover {
+    background: #686666;
+    color: #ffffff;
+}
+
+
+/* Success */
+
+.button.success {
+    background: #ffffff;
+    color: #df6a6a;
+    border: 1.5px solid #df6a6a;
+    font-weight: 600;
+}
+
+.button.success:hover {
+    background: #df6a6a;
+    color: #ffffff;
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    .step-card {
+        padding: 2rem;
+    }
+
+    .step-container {
+        padding: 1.5rem 1rem;
+    }
+
 }

@@ -6,30 +6,22 @@ services:
         autowire: true
         autoconfigure: true
 
-    # ============================
     # ADMIN CONTROLLERS
-    # ============================
     App\Controller\Admin\:
         resource: '../src/Controller/Admin/'
         tags: ['controller.service_arguments']
 
-    # ============================
     # USER CONTROLLERS
-    # ============================
     App\Controller\User\:
         resource: '../src/Controller/User/'
         tags: ['controller.service_arguments']
 
-    # ============================
     # LOGIN SUCCESS HANDLER
-    # ============================
     App\Security\LoginSuccessHandler:
         arguments:
             $router: '@router'
 
-    # ============================
     # GENERAL APP SERVICES
-    # ============================
     App\:
         resource: '../src/'
         exclude:

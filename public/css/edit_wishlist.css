@@ -1,0 +1,157 @@
+
+    /* background image setup (uncomment to enable)
+    background: url("../images/wishlist-bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    */
+
+/* overlay for background image (uncomment if using image)
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    z-index: 0;
+}
+*/
+/* Background */
+
+body {
+    background: #f8fafc;
+}
+
+
+/* Keep content above overlay */
+
+.step-container {
+    position: relative;
+    z-index: 1;
+    padding: 4rem 1rem;
+}
+
+
+/* Main card */
+
+.wishlist-card {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 3rem;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+    transition: 0.3s ease;
+}
+
+/* Hover only on desktop */
+@media (hover: hover) and (pointer: fine) {
+    .wishlist-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 25px 70px rgba(0,0,0,0.08);
+    }
+}
+
+
+/* Title */
+
+.wishlist-card h3 {
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+
+/* Wishlist item */
+
+.wishlist-item {
+    margin-bottom: 1rem;
+}
+
+.wishlist-item input {
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    transition: 0.2s ease;
+}
+
+.wishlist-item input:focus {
+    border-color: #df6a6a;
+    box-shadow: 0 0 0 3px rgba(223,106,106,0.15);
+    outline: none;
+}
+
+
+/* Add item button */
+
+.add-item-btn {
+    background: #ffffff;
+    color: #6b7280;
+    border: 2px solid #85df6a;
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 0.7rem 1.5rem;
+    transition: all 0.25s ease;
+    margin-top: 1rem;
+}
+
+.add-item-btn:hover {
+    background: #85df6a;
+    color: #ffffff;
+}
+
+
+/* Primary button */
+
+.button.primary {
+    background: #df6a6a;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.button.primary:hover {
+    background: #c85a5a;
+}
+
+
+/* Secondary button */
+
+.button.secondary {
+    background: #ffffff;
+    color: #6b7280;
+    border: 1.5px solid #d1d5db;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.button.secondary:hover {
+    background: #5e5e5e;
+    color: #ffffff;
+}
+
+
+/* Remove button */
+
+.button.alert.small {
+    background: #ffffff;
+    color: #dc2626;
+    border: 1.5px solid #dc2626;
+    border-radius: 8px;
+    transition: 0.2s ease;
+}
+
+.button.alert.small:hover {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    .wishlist-card {
+        padding: 2rem;
+    }
+
+    .step-container {
+        padding: 3rem 1rem;
+    }
+
+}

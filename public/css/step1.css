@@ -1,0 +1,87 @@
+/* Page background */
+body {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    background: url("../images/adminresults.jpg") no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(253, 125, 125, 0.2);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index: 0;
+}
+
+/* Step layout spacing */
+.step-container {
+    position: relative;
+    z-index: 1;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+/* Step card styling */
+.step-card {
+    border-radius: 20px;
+    padding: 3rem;
+    background: #ffffff;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+}
+
+/* Card hover effect */
+.step-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.08);
+}
+
+/* Header styling */
+.step-header h1 {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+/* Subtext styling */
+.step-header p {
+    color: #6b7280;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+/* Input styling */
+.step-card input {
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    transition: 0.2s ease;
+}
+
+/* Input focus effect */
+.step-card input:focus {
+    border-color: #df6a6a;
+    box-shadow: 0 0 0 3px rgba(223,106,106,0.20);
+    outline: none;
+}
+
+/* Button spacing */
+.step-actions {
+    margin-top: 2rem;
+}
+
+/* Primary button */
+.button.primary {
+    background: #df6a6a;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: 0.25s ease;
+}
+
+/* Primary button hover */
+.button.primary:hover {
+    background: #c85a5a;
+    box-shadow: 0 8px 20px rgba(223,106,106,0.25);
+}

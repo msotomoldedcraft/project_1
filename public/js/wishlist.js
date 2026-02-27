@@ -1,45 +1,57 @@
 document.addEventListener('DOMContentLoaded', () => {
+
     const container = document.getElementById('wishlist-items');
     const addButton = document.getElementById('add-wishlist-item');
 
-    // Safety check
     if (!container || !addButton) return;
 
-    let index = container.querySelectorAll('.wishlist-item').length;
+    //  Use Symfony-controlled index
+    let index = parseInt(container.dataset.index);
 
-    // Function to remove an item with fade-out effect
     function removeWishlistItem(itemDiv) {
         itemDiv.style.transition = 'opacity 0.3s';
         itemDiv.style.opacity = '0';
         setTimeout(() => itemDiv.remove(), 300);
     }
 
-    // Function to create a new wishlist item
     function createWishlistItem() {
+
         const prototype = container.dataset.prototype;
+
+        // Replace __name__ with current index
         const newForm = prototype.replace(/__name__/g, index);
 
-        const div = document.createElement('div');
-        div.classList.add('wishlist-item', 'mb-2', 'd-flex', 'align-items-center');
-        div.innerHTML = newForm;
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('grid-x', 'align-middle', 'wishlist-item');
 
-        // Create remove button
+        const inputCell = document.createElement('div');
+        inputCell.classList.add('cell', 'auto');
+        inputCell.innerHTML = newForm;
+
+        const buttonCell = document.createElement('div');
+        buttonCell.classList.add('cell', 'shrink');
+
         const removeBtn = document.createElement('button');
         removeBtn.type = 'button';
+        removeBtn.className = 'button alert small';
         removeBtn.textContent = 'Remove';
-        removeBtn.className = 'remove-wishlist btn btn-danger btn-sm ms-2';
-        removeBtn.addEventListener('click', () => removeWishlistItem(div));
 
-        // Append remove button
-        div.appendChild(removeBtn);
+        removeBtn.addEventListener('click', () => {
+            removeWishlistItem(wrapper);
+        });
 
-        // Add to container
-        container.appendChild(div);
-        
+        buttonCell.appendChild(removeBtn);
+        wrapper.appendChild(inputCell);
+        wrapper.appendChild(buttonCell);
+
+        container.appendChild(wrapper);
+
+        //  Update index properly
         index++;
+        container.dataset.index = index;
     }
 
-    // Initialize remove buttons for existing items
+    // Attach remove buttons for existing items
     container.querySelectorAll('.remove-wishlist').forEach(btn => {
         btn.addEventListener('click', function () {
             const itemDiv = btn.closest('.wishlist-item');
@@ -47,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Add new item on click
+    // Add new item
     addButton.addEventListener('click', createWishlistItem);
+
 });

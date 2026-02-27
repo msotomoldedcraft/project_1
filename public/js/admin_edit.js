@@ -1,14 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-    // Fade-in effect
     const container = document.querySelector(".edit-container");
-    container.style.opacity = 0;
-
-    setTimeout(() => {
-        container.style.transition = "opacity 0.4s ease";
-        container.style.opacity = 1;
-    }, 100);
-
+    container.classList.add("loaded");
 });
 
 function addNewWishlist() {
@@ -25,9 +17,7 @@ function addNewWishlist() {
     removeBtn.type = 'button';
     removeBtn.className = 'remove-btn';
     removeBtn.textContent = 'Remove';
-    removeBtn.onclick = function () {
-        wrapper.remove();
-    };
+    removeBtn.onclick = () => wrapper.remove();
 
     wrapper.appendChild(input);
     wrapper.appendChild(removeBtn);

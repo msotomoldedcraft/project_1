@@ -3,62 +3,106 @@
 {% block title %}Draw Names - {{ group.name }}{% endblock %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/admin_draw_names.css') }}">
 {% endblock %}
 
 {% block body %}
 
-<div class="draw-container">
+<div class="grid-container draw-container">
 
     <!-- Back Button -->
-    <div class="draw-back">
-        <button class="btn-secondary" onclick="history.back()">← Back</button>
+    <div class="grid-x grid-padding-x">
+        <div class="cell">
+            <button class="button secondary small" onclick="history.back()">
+                ← Back
+            </button>
+        </div>
     </div>
 
     <!-- Header -->
-    <div class="draw-header">
-        <h1>Draw Names for {{ group.name }}</h1>
-        <p>Select a giver and spin the wheel to assign a receiver!</p>
+    <div class="grid-x grid-padding-x align-center text-center">
+        <div class="cell small-12">
+            <h2>Draw Names for {{ group.name }}</h2>
+            <p>Select a giver and spin the wheel to assign a receiver!</p>
+        </div>
     </div>
 
     <!-- Giver Select -->
-    <div class="giver-select-box">
-        <label for="giver-select">Select a giver:</label>
-        <select id="giver-select" class="form-select">
-            <option value="">-- Select Participant --</option>
-            {% for user in users %}
-                {% if not user.assignedTo %}
-                    <option value="{{ user.id }}">{{ user.name }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
+    <div class="grid-x grid-padding-x align-center">
+        <div class="cell small-12 medium-6 large-4">
+
+            <label>
+                Select a giver:
+
+                <select id="giver-select">
+                    <option value="">-- Select Participant --</option>
+
+                    {% for user in users %}
+                        {% if not user.assignedTo %}
+                            <option value="{{ user.id }}">
+                                {{ user.name }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+
+            </label>
+
+        </div>
     </div>
 
-    <!-- Wheel Card -->
-    <div class="wheel-card">
-        <canvas id="wheel" width="400" height="400"></canvas>
-        <div id="pointer"></div>
+    <!-- Wheel Section -->
+    <div class="grid-x grid-padding-x align-center">
+
+        <div class="cell shrink">
+
+            <!-- Pointer + Wheel Wrapper -->
+            <div class="wheel-wrapper">
+
+                <div class="wheel-pointer"></div>
+
+                <div class="wheel-card">
+                    <canvas id="wheel" width="400" height="400"></canvas>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <!-- Spin Button & Result -->
-    <div class="draw-actions">
-        <button id="draw-btn" class="btn-primary" disabled>Spin</button>
-        <div id="result" class="draw-result"></div>
+    <!-- Spin Button -->
+    <div class="grid-x grid-padding-x align-center text-center">
+
+        <div class="cell small-12">
+
+            <button id="draw-btn"
+                    class="button primary"
+                    disabled>
+                Spin
+            </button>
+
+            <div id="result" class="draw-result"></div>
+
+        </div>
+
     </div>
 
 </div>
 
-<!-- Hidden group ID for AJAX -->
+<!-- Hidden Group ID -->
 <input type="hidden" id="group-id" value="{{ group.id }}">
 
+<!-- Pass Users to JS -->
 <script>
     const allUsers = [
         {% for user in users %}
-            {
-                id: {{ user.id }},
-                name: "{{ user.name|e('js') }}",
-                assignedTo: {% if user.assignedTo %}{{ user.assignedTo.id }}{% else %}null{% endif %}
-            }{% if not loop.last %},{% endif %}
+        {
+            id: {{ user.id }},
+            name: "{{ user.name|e('js') }}",
+            assignedTo: {% if user.assignedTo %}{{ user.assignedTo.id }}{% else %}null{% endif %}
+        }{% if not loop.last %},{% endif %}
         {% endfor %}
     ];
 </script>

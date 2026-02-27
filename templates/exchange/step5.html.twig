@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Step 5 – Email Verification{% endblock %}
+{% block title %}Email Verification{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -8,49 +8,96 @@
 {% endblock %}
 
 {% block body %}
-<div class="container my-5">
-    <div class="card shadow-sm p-5 text-center verification-card">
-        <h1 class="mb-4">Submission Completed ✅</h1>
 
-        <p class="mx-auto mb-4" style="max-width: 600px; font-size: 18px;">
-            Please check your email for confirmation.
-            If you did not receive it, you may resend it below.
-        </p>
+<div class="grid-container step-container">
 
-        <div class="d-flex justify-content-center flex-wrap gap-2 mb-3">
-            <!-- SEND AGAIN -->
-            <form method="post" action="{{ path('exchange_step_5_resend') }}" class="position-relative">
-                <input type="hidden" name="email" value="{{ user.email }}">
-                <button type="submit"
-                        id="resendBtn"
-                        class="btn btn-primary"
-                        disabled>
-                    Send Again
-                </button>
-                <div id="progressBar" class="progress position-absolute w-100" style="bottom:-8px; left:0; height:4px; border-radius:2px; background:#e9ecef;">
-                    <div id="progress" class="progress-bar" role="progressbar"
-                         style="width:0%; height:100%; transition: width 0.1s linear;"></div>
+    <div class="grid-x align-center">
+
+        <div class="cell small-12 medium-8 large-6">
+
+            <div class="callout verification-card text-center">
+
+                <h3>Submission Completed</h3>
+
+                <p class="lead">
+                    Please check your email for confirmation.
+                    If you didn’t receive it, you may resend it below.
+                </p>
+
+                {# FLASH SUCCESS #}
+                {% for message in app.flashes('success') %}
+                    <div class="callout success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+                {# FLASH ERROR #}
+                {% for message in app.flashes('error') %}
+                    <div class="callout alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+                <div class="grid-x grid-padding-x align-center">
+
+                    {# RESEND BUTTON #}
+                    <div class="cell shrink">
+
+                        <form method="post"
+                              action="{{ path('exchange_step_5_resend') }}"
+                              class="resend-form">
+
+                            <input type="hidden"
+                                   name="email"
+                                   value="{{ user.email }}">
+
+                            <button type="submit"
+                                    id="resendBtn"
+                                    class="button primary"
+                                    disabled>
+                                Send Again
+                            </button>
+
+                            {# PROGRESS BAR #}
+                            <div class="progress-container">
+                                <div id="progress" class="progress-bar"></div>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    {# CONFIRM BUTTON #}
+                    <div class="cell shrink">
+                        <a href="{{ path('exchange_confirm', {'token': user.token}) }}"
+                           class="button success">
+                            Confirm
+                        </a>
+                    </div>
+
+                    {# NEW WISHLIST #}
+                    <div class="cell shrink">
+                        <a href="{{ path('exchange_step_1') }}"
+                           class="button secondary">
+                            Create New Wishlist
+                        </a>
+                    </div>
+
                 </div>
-            </form>
 
-            <!-- CONFIRM -->
-            <a href="{{ path('exchange_confirm', {'token': user.token}) }}"
-               class="btn btn-success">
-                Confirm
-            </a>
+                <p class="text-muted">
+                    You can resend the email after
+                    <span id="countdown">5</span> seconds.
+                </p>
 
-            <!-- CREATE NEW WISHLIST -->
-            <a href="{{ path('exchange_step_1') }}"
-               class="btn btn-secondary">
-                Create New Wishlist
-            </a>
+            </div>
+
         </div>
 
-        <p class="text-muted mt-2">
-            You can resend the email after <span id="countdown">5</span> seconds.
-        </p>
     </div>
+
 </div>
+
 {% endblock %}
 
 {% block javascripts %}

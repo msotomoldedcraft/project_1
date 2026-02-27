@@ -1,53 +1,47 @@
 document.addEventListener('DOMContentLoaded', function () {
+
     const giverSelect = document.getElementById('giver-select');
     const drawBtn = document.getElementById('draw-btn');
-    const resultDiv = document.getElementById('result');
     const canvas = document.getElementById('wheel');
+    const groupIdEl = document.getElementById('group-id');
+    const resultDiv = document.getElementById('result');
+
+    if (!giverSelect || !drawBtn || !canvas || !groupIdEl) {
+        console.error("Missing required elements.");
+        return;
+    }
+
     const ctx = canvas.getContext('2d');
     const center = canvas.width / 2;
-    const radius = canvas.width / 2 - 10;
+    const radius = center - 10;
+    const groupId = groupIdEl.value;
 
-    const groupId = document.getElementById('group-id').value;
+    const users = (typeof allUsers !== 'undefined') ? allUsers : [];
 
     let wheelUsers = [];
     let spinning = false;
-    const assignedReceivers = {};
-    allUsers.forEach(u => {
-        if(u.assignedTo) assignedReceivers[u.assignedTo] = true;
-    });
+    let assignedReceivers = {};
+    let currentRotation = 0;
 
     function drawWheel(rotation = 0) {
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        if(!wheelUsers.length){
-            ctx.font='20px Arial';
-            ctx.fillStyle='#333';
-            ctx.textAlign='center';
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (!wheelUsers.length) {
+            ctx.font = '20px Arial';
+            ctx.textAlign = 'center';
             ctx.fillText('No participants', center, center);
             return;
         }
-        const sliceAngle = (2 * Math.PI) / wheelUsers.length;
 
-        // 12 colors
-        const colors = [
-            '#f39959',
-            '#4f8ef3', 
-            '#4ed8aa', 
-            '#e9637a', 
-            '#845be2', 
-            '#ebcd58', 
-            '#42cbe4', 
-            '#ee68ab', 
-            '#c5f17d', 
-            '#f1c788', 
-            '#6084fa', 
-            '#34a6d3'  
-        ];
+        const sliceAngle = (2 * Math.PI) / wheelUsers.length;
+        const colors = ['#6366f1','#4f8ef3','#4ed8aa','#e9637a','#845be2','#ebcd58'];
 
         for (let i = 0; i < wheelUsers.length; i++) {
+
             const start = i * sliceAngle + rotation - Math.PI / 2;
             const end = start + sliceAngle;
 
-            // Use the color from the palette based on index
             ctx.fillStyle = colors[i % colors.length];
 
             ctx.beginPath();
@@ -56,111 +50,134 @@ document.addEventListener('DOMContentLoaded', function () {
             ctx.closePath();
             ctx.fill();
 
-            // Draw participant name
             ctx.save();
             ctx.translate(center, center);
             ctx.rotate(start + sliceAngle / 2);
-            ctx.textAlign = 'right';
             ctx.fillStyle = '#000';
-            ctx.font = '16px Arial';
+            ctx.textAlign = 'right';
             ctx.fillText(wheelUsers[i].name, radius - 10, 5);
             ctx.restore();
         }
-
-        drawPointer();
     }
 
-    function drawPointer(){
-        const arrowLength = 300;
-        const arrowWidth = 150;
-        const pointerDistance = radius-10;
-        ctx.save();
-        ctx.translate(center,center);
-        ctx.beginPath();
-        ctx.moveTo(0,pointerDistance);
-        ctx.lineTo(-arrowWidth/2,pointerDistance+arrowLength);
-        ctx.lineTo(arrowWidth/2,pointerDistance+arrowLength);
-        ctx.closePath();
-        ctx.fillStyle='red';
-        ctx.fill();
-        ctx.strokeStyle='darkred';
-        ctx.stroke();
-        ctx.restore();
-    }
+    function updateWheelUsers() {
 
-    function spinWheel(finalIndex){
-        if(spinning) return;
-        spinning=true;
-        drawBtn.disabled=true;
-        let rotation=0;
-        let speed=Math.random()*0.3+0.3;
-        const friction=0.995;
-        const sliceAngle=(2*Math.PI)/wheelUsers.length;
-        function animate(){
-            rotation+=speed;
-            speed*=friction;
-            drawWheel(rotation);
-            if(speed>0.002){
-                requestAnimationFrame(animate);
-            }else{
-                const stopRotation = finalIndex*sliceAngle+sliceAngle/2;
-                drawWheel(stopRotation);
-                const receiver = wheelUsers[finalIndex];
-                resultDiv.innerHTML=` Receiver: <strong>${receiver.name}</strong>`;
-                assignReceiverToGiver(receiver.id,function(){
-                    assignedReceivers[receiver.id]=true;
-                    const giverOption=giverSelect.querySelector(`option[value="${giverSelect.value}"]`);
-                    if(giverOption) giverOption.remove();
-                    giverSelect.value="";
-                    updateWheelUsers();
-                    drawWheel();
-                    spinning=false;
-                    drawBtn.disabled=true;
-                });
-            }
+        const giverId = parseInt(giverSelect.value);
+
+        if (!giverId) {
+            wheelUsers = [];
+            drawBtn.disabled = true;
+            drawWheel();
+            return;
         }
-        animate();
+
+        wheelUsers = users.filter(u =>
+            u.id !== giverId && !assignedReceivers[u.id]
+        );
+
+        drawBtn.disabled = wheelUsers.length === 0;
+        drawWheel(currentRotation);
     }
 
-    function assignReceiverToGiver(receiverId, callback){
-        const giverId=parseInt(giverSelect.value);
-        if(!giverId) return;
-        const xhr=new XMLHttpRequest();
-        xhr.open("POST",`/exchange/admin/group/${groupId}/draw-assign`,true);
-        xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-        xhr.onreadystatechange=function(){
-            if(xhr.readyState===4){
-                if(xhr.status===200){
-                    const data=JSON.parse(xhr.responseText);
-                    if(data.success){callback();}
-                    else if(data.error){alert(data.error); spinning=false; drawBtn.disabled=false;}
-                } else {alert("Error assigning receiver."); spinning=false; drawBtn.disabled=false;}
+    function assignReceiver(receiverId, callback) {
+
+        const giverId = parseInt(giverSelect.value);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `/exchange/admin/group/${groupId}/draw-assign`);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                try {
+                    const data = JSON.parse(xhr.responseText);
+                    if (data.success) callback();
+                    else alert(data.error || "Error occurred.");
+                } catch (e) {
+                    alert("Invalid server response.");
+                }
             }
         };
+
         xhr.send(`giverId=${giverId}&receiverId=${receiverId}`);
     }
 
-    function updateWheelUsers(){
-        const giverId=parseInt(giverSelect.value);
-        if(!giverId){wheelUsers=[]; drawBtn.disabled=true;}
-        else{
-            wheelUsers=allUsers.filter(u=>u.id!==giverId && !assignedReceivers[u.id]);
-            drawBtn.disabled=wheelUsers.length===0;
+    drawBtn.addEventListener('click', function () {
+
+        if (!giverSelect.value) {
+            alert("Please select a giver.");
+            return;
         }
-    }
 
-    giverSelect.addEventListener('change',()=>{
-        updateWheelUsers();
-        drawWheel();
-        resultDiv.innerHTML='';
+        if (!wheelUsers.length) {
+            alert("No participants available.");
+            return;
+        }
+
+        if (spinning) return;
+
+        spinning = true;
+        drawBtn.disabled = true;
+
+        const sliceAngle = (2 * Math.PI) / wheelUsers.length;
+        const totalSpins = 6;
+        const randomSpin = Math.random() * 2 * Math.PI;
+        const targetRotation = (totalSpins * 2 * Math.PI) + randomSpin;
+
+        const duration = 4000;
+        const startTime = performance.now();
+
+        function animate(time) {
+
+            const elapsed = time - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+
+            currentRotation = easeOut * targetRotation;
+            drawWheel(currentRotation);
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+
+                //  FINAL CORRECT CALCULATION
+                const adjustedRotation = currentRotation % (2 * Math.PI);
+
+                const sliceAngle = (2 * Math.PI) / wheelUsers.length;
+
+                // Wheel is offset by -Math.PI/2 in drawing
+                const wheelAngle = (adjustedRotation + Math.PI / 2) % (2 * Math.PI);
+
+                // Pointer is at bottom (3π/2)
+                const pointerAngle = 3 * Math.PI / 2;
+
+                let relativeAngle =
+                    (pointerAngle - wheelAngle + 2 * Math.PI) % (2 * Math.PI);
+
+                const index = Math.floor(relativeAngle / sliceAngle);
+
+                const receiver = wheelUsers[index];
+
+                assignReceiver(receiver.id, function () {
+
+                    if (resultDiv) {
+                        resultDiv.innerHTML =
+                            `Receiver: <strong>${receiver.name}</strong>`;
+                    }
+
+                    assignedReceivers[receiver.id] = true;
+
+                    updateWheelUsers();
+                    spinning = false;
+                    drawBtn.disabled = wheelUsers.length === 0;
+                });
+            }
+        }
+
+        requestAnimationFrame(animate);
     });
 
-    drawBtn.addEventListener('click',()=>{
-        if(!giverSelect.value){alert('Please select a giver!'); return;}
-        if(!wheelUsers.length){alert('No participants available!'); return;}
-        const finalIndex=Math.floor(Math.random()*wheelUsers.length);
-        spinWheel(finalIndex);
-    });
+    giverSelect.addEventListener('change', updateWheelUsers);
 
     updateWheelUsers();
     drawWheel();

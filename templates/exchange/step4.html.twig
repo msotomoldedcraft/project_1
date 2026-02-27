@@ -4,47 +4,80 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/step4.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('css/step4.css') }}">
 {% endblock %}
 
 {% block body %}
-<div class="container my-5">
-    <div class="card shadow-lg p-5 mx-auto confirmation-card">
-        <h1 class="mb-4 text-center">Step 4: Confirm Your Details</h1>
 
-        <p class="text-center text-muted mb-4">
-            Please review your input before sending the verification email.
-        </p>
+<div class="grid-container step-container">
 
-        <ul class="list-group mb-4">
-            <li class="list-group-item"><strong>Name:</strong> {{ data.name }}</li>
-            <li class="list-group-item"><strong>Email:</strong> {{ data.email }}</li>
-            <li class="list-group-item"><strong>Event:</strong> {{ data.event }}</li>
-            <li class="list-group-item">
-                <strong>Wishlist:</strong>
-                <ul class="mt-2">
-                    {% for item in data.wishlist %}
-                        <li>{{ item }}</li>
-                    {% else %}
-                        <li>No wishlist items added.</li>
-                    {% endfor %}
+    <div class="grid-x align-center">
+
+        <div class="cell small-12 medium-8 large-6">
+
+            <div class="callout step-card">
+
+                <h3 class="text-center">Step 4: Confirm Your Details</h3>
+
+                <p class="text-center">
+                    Please review your input before sending the verification email.
+                </p>
+
+                <!-- Details -->
+                <ul class="no-bullet">
+                    <li><strong>Name:</strong> {{ data.name }}</li>
+                    <li><strong>Email:</strong> {{ data.email }}</li>
+                    <li><strong>Event:</strong> {{ data.event }}</li>
+                    <li>
+                        <strong>Wishlist:</strong>
+
+                        <ul>
+                            {% for item in data.wishlist %}
+                                <li>{{ item }}</li>
+                            {% else %}
+                                <li>No wishlist items added.</li>
+                            {% endfor %}
+                        </ul>
+
+                    </li>
                 </ul>
-            </li>
-        </ul>
 
-        <div class="d-flex justify-content-between">
-            <a href="{{ path('exchange_step_3') }}" class="btn btn-secondary btn-lg">
-                ← Back
-            </a>
+                <hr>
 
-            <form method="post" action="{{ path('exchange_step_4_submit') }}">
-                <button class="btn btn-success btn-lg">
-                    Confirm & Send Verification
-                </button>
-            </form>
+                <div class="grid-x align-justify">
+
+                    <div class="cell shrink">
+                        <a href="{{ path('exchange_step_3') }}"
+                           class="button secondary">
+                            ← Back
+                        </a>
+                    </div>
+
+                    <div class="cell shrink">
+
+                        <form method="post"
+                              action="{{ path('exchange_step_4_submit') }}">
+
+                            <button type="submit"
+                                    class="button success">
+                                Confirm & Send Verification
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
+
     </div>
+
 </div>
+
 {% endblock %}
 
 {% block javascripts %}

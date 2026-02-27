@@ -1,4 +1,3 @@
-# config/packages/security.yaml
 security:
     enable_authenticator_manager: true
 
@@ -29,12 +28,6 @@ security:
                 target: app_login
 
     access_control:
-    # Admin routes
-    - { path: ^/exchange/admin, roles: ROLE_ADMIN }
-
-    # Step pages require login
-    - { path: ^/exchange/step, roles: ROLE_USER }
-
-    # Intro page is public
-    - { path: ^/exchange$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-
+        - { path: ^/exchange/admin, roles: ROLE_ADMIN }
+        - { path: ^/exchange/step, roles: ROLE_USER }
+        - { path: ^/exchange$, roles: IS_AUTHENTICATED_ANONYMOUSLY }

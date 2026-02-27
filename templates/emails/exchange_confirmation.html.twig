@@ -1,53 +1,67 @@
 {# templates/emails/exchange_confirmation.html.twig #}
+
 <table width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial,sans-serif; background:#f7f7f7; padding:20px;">
     <tr>
         <td align="center">
-            <table width="600" cellpadding="0" cellspacing="0" style="background:white; border-radius:10px; padding:30px; box-shadow:0 0 10px rgba(0,0,0,0.1);">
+
+            <table width="600" cellpadding="0" cellspacing="0"
+                   style="background:white; border-radius:10px; padding:30px; box-shadow:0 0 10px rgba(0,0,0,0.08);">
+
+                <!-- Header -->
                 <tr>
                     <td style="text-align:center; padding-bottom:20px;">
-                        <h1 style="color:#28a745; font-size:24px; margin:0;">🎁 Secret Exchange Confirmation</h1>
+                        <h1 style="color:#df6a6a; font-size:22px; margin:0;">
+                            Secret Exchange Confirmation
+                        </h1>
                     </td>
                 </tr>
 
+                <!-- Message -->
                 <tr>
-                    <td style="padding-bottom:20px; text-align:center;">
-                        <p style="font-size:16px; color:#555;">
+                    <td style="text-align:center; padding-bottom:20px;">
+
+                        <p style="font-size:16px; color:#555; margin-bottom:10px;">
                             Hi <strong>{{ user.name }}</strong>,
                         </p>
+
                         <p style="font-size:16px; color:#555;">
-                            Your submission for <strong>{{ event }}</strong> has been successfully recorded.
+                            Your submission for <strong>{{ event }}</strong>
+                            has been successfully recorded.
                         </p>
+
                     </td>
                 </tr>
 
-                <tr>
-                    <td style="padding-bottom:20px; text-align:center;">
-                        <p style="font-size:16px; color:#555; margin-bottom:10px;">Download your submission (PDF):</p>
-                        <a href="{{ downloadUrl }}" style="display:inline-block; padding:12px 24px; background:#007bff; color:white; text-decoration:none; border-radius:6px; font-weight:bold;">
-                            Download PDF
-                        </a>
-                    </td>
-                </tr>
-
-                {% if wishlistItems is defined and wishlistItems|length > 0 %}
+                <!-- Wishlist (optional) -->
+                {% if user.wishlist is defined and user.wishlist|length > 0 %}
                 <tr>
                     <td style="padding-bottom:20px;">
-                        <p style="font-size:16px; color:#555; font-weight:bold; margin-bottom:5px;">Your Wishlist:</p>
-                        <ul style="font-size:16px; color:#555; padding-left:20px; margin:0;">
-                            {% for item in wishlistItems %}
-                                <li>{{ item }}</li>
+
+                        <p style="font-size:15px; color:#555; font-weight:bold; margin-bottom:8px;">
+                            Your Wishlist:
+                        </p>
+
+                        <ul style="font-size:15px; color:#555; padding-left:20px; margin:0;">
+                            {% for item in user.wishlist %}
+                                <li>{{ item.name }}</li>
                             {% endfor %}
                         </ul>
+
                     </td>
                 </tr>
                 {% endif %}
 
+                <!-- Footer -->
                 <tr>
                     <td style="text-align:center; padding-top:20px; border-top:1px solid #eee;">
-                        <p style="font-size:14px; color:#999; margin:0;">Thank you for participating! 🎁</p>
+                        <p style="font-size:13px; color:#999; margin:0;">
+                            Thank you for participating in Secret Exchange
+                        </p>
                     </td>
                 </tr>
+
             </table>
+
         </td>
     </tr>
 </table>

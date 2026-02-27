@@ -1,0 +1,163 @@
+/* Background */
+
+body {
+    margin: 0;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8fafc;
+}
+
+
+/* Wrapper */
+
+.step6-wrapper {
+    position: relative;
+    min-height: calc(100vh - 140px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    z-index: 1;
+}
+
+
+/* Grid */
+
+.grid-container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+
+/* Welcome Card */
+
+.welcome-card {
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto;
+
+    background: #ffffff;
+    border-radius: 20px;
+
+    padding: 3.5rem;
+
+    box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+    border: 1px solid #e5e7eb;
+
+    text-align: center;
+
+    transition: all 0.25s ease;
+}
+
+/* Hover only on desktop */
+@media (hover: hover) and (pointer: fine) {
+    .welcome-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 25px 60px rgba(0,0,0,0.08);
+    }
+}
+
+
+/* Typography */
+
+.welcome-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: #111827;
+}
+
+.welcome-subtitle {
+    font-size: 1.05rem;
+    color: #6b7280;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+
+.divider {
+    border: none;
+    height: 1px;
+    background: #e5e7eb;
+    margin: 2.5rem 0;
+}
+
+
+/* Button group */
+
+.button-group {
+    margin-top: 1rem;
+}
+
+.button-group .cell {
+    width: 100%;
+}
+
+
+/* Buttons */
+
+.button {
+    width: 100%;
+    border-radius: 14px;
+    padding: 1rem 1.2rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+
+/* Primary */
+
+.button.primary {
+    background: #df6a6a;
+    color: white;
+    border: 1px solid #df6a6a;
+}
+
+.button.primary:hover {
+    background: #c85a5a;
+}
+
+
+/* Secondary */
+
+.button.secondary {
+    background: white;
+    border: 1px solid #e5e7eb;
+    color: #374151;
+}
+
+.button.secondary:hover {
+    background: #3a3a3a;
+    color: #ffffff;
+}
+
+
+/* Success */
+
+.button.success {
+    background: white;
+    border: 1px solid #df6a6a;
+    color: #df6a6a;
+}
+
+.button.success:hover {
+    background: #df6a6a;
+    color: white;
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    .step6-wrapper {
+        padding: 40px 15px;
+    }
+
+    .welcome-card {
+        padding: 2.2rem 1.5rem;
+    }
+
+    .welcome-title {
+        font-size: 1.8rem;
+    }
+
+}

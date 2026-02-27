@@ -1,162 +1,80 @@
-/* =========================
-   ROOT VARIABLES
-========================= */
-:root {
-    --primary: #6366f1;
-    --primary-dark: #4338ca;
-    --border: rgba(255,255,255,0.2);
-    --text-dark: #ffffff;
-    --text-muted: rgba(255, 255, 255, 0.7);
-    --success: #d1f04a;
-}
-
-/* =========================
-   BACKGROUND MASTERPIECE
-========================= */
+/* Base */
 
 body {
     margin: 0;
     font-family: "Inter", "Segoe UI", sans-serif;
-    background: url("../images/adminresults.jpg") no-repeat center center fixed;
-    background-size: cover;
-    position: relative;
+    overflow-x: hidden;
 }
 
-/* Blur + Dark Overlay */
+
+/* Background image */
+
+body {
+    background: url("../images/adminresults.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+
+/* Dark overlay */
+
 body::before {
     content: "";
     position: fixed;
     inset: 0;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    background: rgba(196, 80, 80, 0.45);
-    z-index: 0;
+
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+
+    z-index: -1;
 }
 
-/* =========================
-   CONTAINER
-========================= */
+
+/* Page container */
 
 .results-container {
+    margin-top: 3rem;
     position: relative;
-    z-index: 2;
-    max-width: 1000px;
-    margin: 60px auto;
-    padding: 0 20px;
-    color: var(--text-dark);
+    z-index: 1;
 }
 
-/* =========================
-   HEADER
-========================= */
 
-.results-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-}
-
-.results-header h1 {
-    font-size: 32px;
-    font-weight: 600;
-}
-
-/* =========================
-   GLASS CARD
-========================= */
+/* Card */
 
 .results-card {
-    background: rgba(133, 122, 122, 0.85); /* MORE WHITE */
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 18px;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-    padding: 30px;
-    overflow-x: auto;
+    background: rgba(255,255,255,0.95);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
-/* =========================
-   TABLE
-========================= */
 
-.results-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.results-table th,
-.results-table td {
-    padding: 18px 20px;
-    text-align: left;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.results-table th {
-    color: var(--text-muted);
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 13px;
-    letter-spacing: 1px;
-}
-
-.results-table tr {
-    transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.results-table tr:hover {
-    transform: translateX(5px);
-    background: rgba(255,255,255,0.05);
-}
-
-/* =========================
-   TEXT STYLES
-========================= */
+/* Text styles */
 
 .giver {
     font-weight: 600;
-    color: #efecff;
 }
 
 .receiver {
     font-weight: 600;
-    color: var(--success);
+    color: #16a34a;
 }
 
 .not-assigned {
-    color: var(--text-muted);
+    color: #6b7280;
     font-style: italic;
 }
 
-/* =========================
-   BUTTON
-========================= */
 
-.btn-secondary {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid var(--border);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-size: 14px;
-    transition: all 0.2s ease;
-}
-
-.btn-secondary:hover {
-    background: rgba(255,255,255,0.2);
-    transform: translateY(-2px);
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
+/* Mobile fix */
 
 @media (max-width: 768px) {
-    .results-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
+
+    body {
+        background-attachment: scroll; /* fixes mobile issue */
     }
+
+    .results-card {
+        padding: 1.5rem;
+    }
+
 }

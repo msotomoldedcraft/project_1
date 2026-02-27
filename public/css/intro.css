@@ -1,373 +1,178 @@
-/* =========================
-   FULL SCREEN SECTIONS + SCROLL SNAP
-========================= */
-html {
-    scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
+/* Variables */
+
+:root {
+    --primary: #df6a6a;
+    --primary-light: #f88484;
+
+    --text-dark: #1f2937;
+    --text-muted: #6b7280;
 }
+
+
+/* Base */
 
 body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    background-color: #ffffff;
-    color: #222;
     margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow-x: hidden;
+    font-family: "Inter", "Segoe UI", sans-serif;
+    background: #ffffff;
+    color: var(--text-dark);
 }
 
-section {
-    width: 100%;
-    height: 100vh;           /* exactly viewport height */
+
+/* Hero */
+
+.intro-hero {
+    position: relative;
+    min-height: 100vh;
+    background: url("../images/welcometosecretexchange.jpg") center/cover no-repeat;
     display: flex;
-    justify-content: center;
     align-items: center;
-    position: relative;
-    scroll-snap-align: start; /* snap to top of section */
-    box-sizing: border-box;
-    overflow: hidden;
+    justify-content: center;
 }
 
-/* Internal content scroll if too tall */
-section > .content-wrapper {
-    max-height: 100%;
-    overflow-y: auto;
-    position: relative;
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        #0f172080,
+        #df6a6abf
+    );
     z-index: 1;
 }
 
-/* =========================
-   SCROLL ARROWS
-========================= */
-.scroll-down {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 2rem;
-    cursor: pointer;
-    color: #fff;
-    animation: bounce 1.5s infinite;
-    z-index: 9999;
-}
-
-.scroll-up {
-    position: fixed;
-    bottom: 70px; /* above down arrow */
-    right: 20px;
-    font-size: 2rem;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 50%;
-    background: rgba(0,0,0,0.6);
-    color: #fff;
-    cursor: pointer;
-    display: block;
-    z-index: 9999;
-}
-
-/* Hide down arrow on last section */
-section:last-of-type .scroll-down {
-    display: none;
-}
-
-/* =========================
-   BOUNCE ANIMATION
-========================= */
-@keyframes bounce {
-    0%,20%,50%,80%,100% { transform: translateY(0); }
-    40% { transform: translateY(10px); }
-    60% { transform: translateY(5px); }
-}
-
-/* =========================
-   HERO SECTION
-========================= */
-.hero-wrapper {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.hero-content {
     position: relative;
-    background-color: #d3c3c6;
-    overflow: hidden;
-}
-
-.hero-wrapper::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-image: url('/images/herosection.jpg');
-    background-size: cover;
-    background-position: center;
-    filter: blur(2px);
-    opacity: 0.7;
-    z-index: 0;
-}
-
-.hero-card {
-    position: relative;
-    max-width: 1200px;
-    width: 90%;
-    padding: 4rem 3rem;
-    border-radius: 28px;
+    z-index: 2;
+    color: #ffffff;
     text-align: center;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.08);
-    overflow: hidden;
-    background-color: rgb(199, 123, 123);
+    padding: 2rem;
 }
 
-.hero-card::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/images/welcometosecretexchange.jpg');
-    background-size: cover;
-    background-position: center;
-    filter: blur(1px);
-    opacity: 0.8;
-    z-index: 0;
+.hero-title {
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
 }
 
-.hero-card h1,
-.hero-card .hero-sub,
-.hero-card .btn-primary {
-    position: relative;
-    z-index: 1;
-}
-
-.hero-sub {
+.hero-subtitle {
     font-size: 1.1rem;
-    margin-bottom: 1.5rem;
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+    line-height: 1.7;
 }
 
-.btn-primary {
-    display: inline-block;
-    padding: 14px 36px;
-    background-color: #f4a742;
-    color: #222;
+
+/* Button */
+
+.hero-btn {
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--primary-light)
+    );
+    color: #ffffff;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
     font-weight: 600;
     text-decoration: none;
-    border-radius: 40px;
     transition: 0.3s ease;
 }
 
-.btn-primary:hover {
-    background-color: #e5942e;
-    transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+    .hero-btn:hover {
+        transform: translateY(-4px);
+    }
 }
 
-/* =========================
-   FEATURES SECTION
-========================= */
-.features-section {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    padding: 3rem 2rem;
-    background: #F1BB87;
-    overflow: hidden;
+
+/* Sections */
+
+.intro-section {
+    padding: 4rem 1.5rem;
 }
 
-.features-section::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-image: url('/images/feature.jpg');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.5;
-    filter: blur(2px);
-    z-index: 0;
+.section-cool {
+    background: #f17272bf;
 }
 
-.features-section .content-wrapper {
-    position: relative;
-    z-index: 1;
-    max-width: 1200px;
-    width: 95%;
-    margin: auto;
+.section-warm {
+    background: #f89797bf;
+}
+
+
+/* Section title */
+
+.section-title h2 {
     text-align: center;
-    max-height: 100%;
-    overflow-y: auto;
+    font-weight: 800;
+    margin-bottom: 3rem;
+    color: #f14747;
+    font-size: 2rem;
 }
 
-.feature-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
-    justify-items: center;
-}
 
-.feature-item {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    background: rgb(199,145,110);
+/* Feature cards */
+
+.feature-card {
+    background: #ffffff;
+    padding: 2rem;
     border-radius: 20px;
-    padding: 1.5rem 1rem;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-    text-align: center;
-    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    border: 1px solid #f1f1f1;
+    height: 100%;
     transition: 0.3s ease;
-    color: #fff;
 }
 
-.feature-item::before {
-    content: "";
-    position: absolute;
-    top:0; left:0;
-    width:100%; height:100%;
-    background-size: cover;
-    background-position: center;
-    background-image: var(--bg-image);
-    filter: blur(1px);
-    opacity: 0.6;
-    z-index: 0;
-    border-radius: 20px;
+/* Hover only on desktop */
+@media (hover: hover) and (pointer: fine) {
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+    }
 }
 
-.feature-item::after {
-    content: "";
-    position: absolute;
-    top:0; left:0;
-    width:100%; height:100%;
-    background: rgba(0,0,0,0.2);
-    border-radius: 20px;
-    z-index: 0;
+.feature-card h5 {
+    color: var(--primary);
+    font-weight: 700;
+    margin-bottom: 1rem;
 }
 
-.feature-item h3,
-.feature-item p {
-    position: relative;
-    z-index: 1;
+.feature-card p {
+    color: var(--text-muted);
+    line-height: 1.6;
 }
 
-.feature-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.1);
-}
 
-.feature-1::before { background-image: url('/images/feature1.jpg'); }
-.feature-2::before { background-image: url('/images/feature2.jpg'); }
-.feature-3::before { background-image: url('/images/feature3.jpg'); }
-.feature-4::before { background-image: url('/images/feature4.jpg'); }
+/* About text */
 
-/* =========================
-   ABOUT SECTION
-========================= */
-.about-section {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    padding: 3rem 2rem;
-    background: #545E75;
-}
-
-.about-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/images/aboutsecretexchange.jpg');
-    background-size: cover;
-    background-position: center;
-    filter:blur(5px);
-    opacity: 0.3;
-    z-index: 0;
-}
-
-.about-section .content-wrapper {
-    max-width: 1200px;
-    width: 95%;
-    margin: auto;
-    text-align: left;
-    background: white;
-    padding: 3rem 2rem;
-    border-radius: 60px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-    position: relative;
-    overflow-y: auto;
-}
-
-.about-section .content-wrapper::before {
-    content: "";
-    position: absolute;
-    top:0; left:0;
-    width:100%; height:100%;
-    background-image: url('/images/aboutsecretexchange.jpg');
-    background-size: cover;
-    background-position: center;
-    filter: blur(3px);
-    opacity: 0.5;
-    z-index: 0;
-}
-
-.about-section h2,
-.about-section p {
-    position: relative;
-    z-index: 1;
+.about-text {
+    max-width: 750px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    line-height: 1.8;
     text-align: center;
-    font-weight: 500;
 }
 
 
-/* =========================
-   HOW IT WORKS SECTION
-========================= */
-.how-section {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    padding: 3rem 2rem;
-    background-color: #4d3737;
-    overflow: hidden;
-}
+/* Mobile fixes */
 
-.how-section::before {
-    content: "";
-    position: absolute;
-    top:0; left:0;
-    width:100%; height:100%;
-    background-image: url('/images/howitworks.jpg');
-    background-size: cover;
-    background-position: center;
-    filter: blur(1px);
-    opacity: 0.7;
-    z-index: 0;
-}
+@media (max-width: 768px) {
 
-.how-section .content-wrapper {
-    max-width: 1200px;
-    max-height: 100%;
-    width: 95%;
-    margin: auto;
-    text-align: center;
-    background: rgba(204,196,196,0.85);
-    padding: 3rem 2rem;
-    border-radius: 60px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-    position: relative;
-    overflow-y: auto;
-    z-index: 1;
-}
-.how-section p{
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    font-weight: 500;
-}
+    .intro-hero {
+        min-height: 90vh;
+    }
 
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 900px) {
-    .feature-list { grid-template-columns: 1fr; }
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .intro-section {
+        padding: 3rem 1rem;
+    }
+
+    .section-title h2 {
+        font-size: 1.6rem;
+    }
+
 }

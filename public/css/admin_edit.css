@@ -1,250 +1,170 @@
-:root {
-    --primary: #4f46e5;
-    --primary-dark: #3730a3;
-    --border: #e5e7eb;
-    --text-dark: #111827;
-    --text-muted: #6b7280;
-    --danger: #dc2626;
-    --bg: #f8fafc;
-}
+/* Base */
 
-/* =========================
-   BASE
-========================= */
 body {
     margin: 0;
     font-family: "Inter", "Segoe UI", sans-serif;
-    color: var(--text-dark);
     min-height: 100vh;
+    overflow-x: hidden;
     position: relative;
-    background: var(--bg);
-    /* Remove flex centering */
-    display: block;
-    overflow-x: hidden; /* prevent horizontal scroll */
 }
 
-/* =========================
-   FULLSCREEN BACKGROUND IMAGE
-========================= */
+
+/* Background image */
+
 body::before {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-image: url('/images/admineditparticipant.jpg'); /* <-- change to your image path */
+    inset: 0;
+
+    background-image: url('/images/admineditparticipant.jpg');
     background-size: cover;
     background-position: bottom center;
     background-repeat: no-repeat;
+
     filter: blur(5px);
-    opacity: 0.8; /* adjust opacity */
+    opacity: 0.8;
+
     z-index: -2;
 }
 
-/* Dark gradient overlay to improve readability */
+
+/* Dark overlay */
+
 body::after {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.25));
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.35);
+
     z-index: -1;
 }
 
-/* =========================
-   EDIT CONTAINER
-========================= */
+
+/* Page container */
+
 .edit-container {
-    max-width: 900px;
-    width: 90%;
-    margin: 50px auto; /* will allow vertical scroll */
-    padding: 40px 30px;
-    position: relative;
-    z-index: 1;
+    padding: 2rem 1rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
-/* =========================
-   HEADER
-========================= */
-.edit-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
+.edit-container.loaded {
+    opacity: 1;
 }
 
-.edit-header h1 {
-    font-size: 28px;
+
+/* Header */
+
+.edit-container h2 {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.edit-container p {
+    color: rgba(255,255,255,0.85);
+    font-size: 1rem;
+    margin: 0;
+}
+
+.edit-container p strong {
+    color: #ffffff;
+}
+
+
+/* Card */
+
+.callout {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+
+/* Section title */
+
+.callout h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
     font-weight: 600;
-    color: white; /* better contrast on background */
 }
 
-.edit-header p {
-    font-size: 14px;
-    color: rgba(255,255,255,0.8);
+
+/* Inputs */
+
+label {
+    font-weight: 500;
 }
 
-/* =========================
-   CARD
-========================= */
-.edit-card {
-    background: rgba(255, 255, 255, 0.9); /* slightly transparent to show bg */
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+input[type="text"],
+input[type="email"] {
+    border-radius: 6px;
 }
 
-/* =========================
-   FORM SECTIONS
-========================= */
-.form-section {
-    margin-bottom: 35px;
+
+/* Wishlist */
+
+#wishlist-container {
+    margin-bottom: 1rem;
 }
 
-.form-section h3 {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.section-muted {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 15px;
-}
-
-/* =========================
-   FORM GRID
-========================= */
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.form-group label {
-    display: block;
-    font-size: 13px;
-    margin-bottom: 6px;
-    color: var(--text-muted);
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    font-size: 14px;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
-}
-
-/* =========================
-   WISHLIST
-========================= */
 .wishlist-item {
     display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.wishlist-item input {
-    flex: 1;
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-}
-
-.remove-btn {
-    background: white;
-    border: 1px solid var(--danger);
-    color: var(--danger);
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.remove-btn:hover {
-    background: var(--danger);
-    color: white;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap; /* mobile fix */
 }
 
 .empty-state {
-    font-size: 13px;
-    color: var(--text-muted);
+    color: #6b7280;
+    font-size: 0.9rem;
 }
 
-/* =========================
-   ACTION BUTTONS
-========================= */
-.form-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 20px;
+
+/* Remove button */
+
+.button.alert.tiny {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
 }
 
-.btn-primary {
-    background: var(--primary);
-    color: white;
-    padding: 8px 18px;
-    border-radius: 8px;
-    border: none;
-    font-size: 13px;
-    cursor: pointer;
+
+/* Bottom buttons */
+
+.button.success.expanded,
+.button.secondary.expanded {
+    border-radius: 6px;
 }
 
-.btn-primary:hover {
-    background: var(--primary-dark);
+.grid-x .cell {
+    margin-top: 0.5rem;
 }
 
-.btn-secondary {
-    background: white;
-    border: 1px solid var(--border);
-    color: var(--text-dark);
-    padding: 8px 18px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 13px;
+
+/* Desktop hover only */
+
+@media (hover: hover) and (pointer: fine) {
+    .button:hover {
+        transform: translateY(-2px);
+    }
 }
 
-.btn-secondary:hover {
-    background: #f3f4f6;
-}
 
-.btn-outline {
-    background: white;
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    padding: 6px 14px;
-    border-radius: 8px;
-    font-size: 13px;
-    cursor: pointer;
-}
+/* Mobile adjustments */
 
-.btn-outline:hover {
-    background: var(--primary);
-    color: white;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
 @media (max-width: 768px) {
-    .form-grid {
-        grid-template-columns: 1fr;
+
+    .callout {
+        padding: 1.5rem;
     }
 
-    .edit-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+    .edit-container h2 {
+        font-size: 1.6rem;
     }
+
 }

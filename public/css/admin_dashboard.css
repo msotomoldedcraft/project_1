@@ -1,435 +1,227 @@
-/* =========================
-   ROOT VARIABLES
-========================= */
+/* Root Variables */
+
 :root {
-    --primary: #6366f1;
-    --primary-dark: #4338ca;
-    --primary-soft: #eef2ff;
+    --primary: #e44444;
+    --primary-dark: #c93a3a;
     --success: #16a34a;
+    --warning: #f59e0b;
     --danger: #dc2626;
-    --border: rgba(255,255,255,0.3);
-    --text-dark: #111827;
-    --text-muted: #6b7280;
+    --slate: #334155;
+    --slate-dark: #1e293b;
+    --glass-bg: rgba(255, 255, 255, 0.92);
 }
 
-/* =========================
-   BACKGROUND MASTERPIECE
-========================= */
+
+/* Background */
+
 body {
     margin: 0;
     font-family: "Inter", "Segoe UI", sans-serif;
-    background: url("../images/feature.jpg") no-repeat center center fixed;
+    min-height: 100vh;
+    background: url("../images/feature.jpg") no-repeat center center;
     background-size: cover;
     position: relative;
 }
+
+
+/* Overlay */
 
 body::before {
     content: "";
     position: fixed;
     inset: 0;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(15px);
-    background: rgba(0,0,0,0.35);
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     z-index: 0;
 }
 
-/* =========================
-   MAIN CONTAINER (Glass)
-========================= */
-.admin-container {
+
+/* Content above overlay */
+
+.admin-container,
+.callout,
+table {
     position: relative;
-    z-index: 2;
-    max-width: 1400px;
-    margin: 60px auto;
-    padding: 40px;
-    background: rgba(255,255,255,0.92);
-    border-radius: 22px;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.25);
-    transition: all 0.4s ease;
+    z-index: 1;
 }
 
-/* =========================
-   HEADER
-========================= */
-.admin-header {
-    margin-bottom: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+/* Container */
+
+.admin-container {
+    margin-top: 40px;
+    padding: 0 1rem;
 }
 
-.admin-header h1 {
-    font-size: 32px;
+
+/* Typography */
+
+h1 {
+    font-weight: 700;
+    color: #ffffff;
+}
+
+p {
+    color: #ffffff;
+}
+
+
+/* Cards */
+
+.callout {
+    border-radius: 16px;
+    background: var(--glass-bg);
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Buttons */
+
+.button {
+    border-radius: 10px;
     font-weight: 600;
+    transition: all 0.2s ease;
 }
 
-.admin-header p {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-top: 6px;
+/* Hover only on desktop */
+@media (hover: hover) and (pointer: fine) {
+    .button:hover:not(:disabled) {
+        transform: translateY(-2px);
+    }
 }
 
-/* =========================
-   CREATE GROUP BUTTON
-========================= */
-.btn-create-group {
+
+/* Primary */
+
+.button.primary {
     background: var(--primary);
     color: white;
-    padding: 10px 22px;
-    border-radius: 10px;
-    font-size: 13px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: 0.25s ease;
+    border: none;
 }
 
-.btn-create-group:hover {
+.button.primary:hover {
     background: var(--primary-dark);
-    box-shadow: 0 10px 25px rgba(99,102,241,0.3);
 }
 
-/* =========================
-   STATS
-========================= */
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 30px;
-    margin-bottom: 50px;
+
+/* Secondary */
+
+.button.secondary {
+    background: var(--slate);
+    color: white;
+    border: none;
 }
 
-.stat-card {
+.button.secondary:hover {
+    background: var(--slate-dark);
+}
+
+
+/* Warning */
+
+.button.warning {
+    background: var(--warning);
+    color: white;
+    border: none;
+}
+
+.button.warning:hover {
+    background: #d97706;
+}
+
+
+/* Danger */
+
+.button.alert {
+    background: var(--danger);
+    color: white;
+    border: none;
+}
+
+.button.alert:hover {
+    background: #b91c1c;
+}
+
+
+/* Table */
+
+table {
     background: white;
-    border-radius: 18px;
-    padding: 28px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-    transition: all 0.25s ease;
-    position: relative;
-}
-
-.stat-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 45px rgba(0,0,0,0.12);
-}
-
-.stat-label {
-    font-size: 13px;
-    color: var(--text-muted);
-}
-
-.stat-value {
-    font-size: 34px;
-    font-weight: 600;
-    margin-top: 12px;
-    color: var(--primary);
-}
-
-/* =========================
-   CARD (GROUP TABLE)
-========================= */
-.card {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    border-radius: 12px;
     overflow: hidden;
-}
-
-.card-header {
-    padding: 22px 28px;
-    background: var(--primary-soft);
-}
-
-.card-header h2 {
-    font-size: 16px;
-    font-weight: 600;
-}
-
-/* =========================
-   TABLE
-========================= */
-.admin-table {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
     width: 100%;
-    border-collapse: collapse;
 }
 
-.admin-table th {
-    text-align: left;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-muted);
-    padding: 20px 28px;
-    background: #fafafa;
+
+/* Table header */
+
+table thead {
+    background: #f8fafc;
 }
 
-.admin-table td {
-    padding: 26px 28px;
-    border-top: 1px solid #f1f5f9;
+
+/* Row hover only on desktop */
+
+@media (hover: hover) and (pointer: fine) {
+    tbody tr:hover {
+        background-color: #f9fafb;
+        transition: 0.2s ease;
+    }
+}
+
+
+/* Table cells */
+
+table tbody td {
     vertical-align: top;
 }
 
-.admin-table tr {
-    transition: background 0.2s ease, opacity 0.4s ease;
+table tbody td:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.admin-table tr:hover {
-    background: #f9faff;
-}
 
-/* =========================
-   PARTICIPANTS
-========================= */
-.participant-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+/* Badges */
 
-.participant-item {
-    padding: 14px 0;
-    border-bottom: 1px solid #f3f4f6;
-}
-
-.email {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-left: 8px;
-}
-
-/* =========================
-   BADGES
-========================= */
-.badge {
-    font-size: 11px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-left: 10px;
-    font-weight: 500;
-}
-
-.badge-success {
-    background: #dcfce7;
+.label.success {
+    background-color: #dcfce7;
     color: var(--success);
+    border-radius: 6px;
 }
 
-.badge-muted {
-    background: #f3f4f6;
+.label.secondary {
+    background-color: #f3f4f6;
     color: #374151;
+    border-radius: 6px;
 }
 
-/* =========================
-   BUTTONS
-========================= */
-.btn-action {
-    padding: 6px 14px;
-    border-radius: 8px;
-    font-size: 12px;
-    text-decoration: none;
-    transition: 0.2s ease;
-}
 
-.btn-light {
-    background: #ffffff;
-    color: var(--text-dark);
-    border: 1px solid #16a34a;
-}
+/* Fade animation */
 
-.btn-outline {
-    border: 1px solid var(--primary);
-    color: var(--primary);
-}
-
-.btn-danger {
-    border: 1px solid var(--danger);
-    color: var(--danger);
-}
-
-.btn-light:hover {
-    background: #e5e7eb;
-}
-
-.btn-outline:hover {
-    background: var(--primary);
-    color: white;
-}
-
-.btn-danger:hover {
-    background: var(--danger);
-    color: white;
-}
-
-/* Main Action Buttons */
-.btn-primary {
-    background: var(--primary);
-    color: white;
-    padding: 8px 20px;
-    border-radius: 10px;
-    font-size: 13px;
-    text-decoration: none;
-    transition: 0.25s ease;
-}
-
-.btn-secondary {
-    background: white;
-    border: 1px solid #e5e7eb;
-    color: var(--text-dark);
-    padding: 8px 20px;
-    border-radius: 10px;
-    font-size: 13px;
-    margin-right: 10px;
-    text-decoration: none;
-}
-
-.btn-primary:hover {
-    background: var(--primary-dark);
-    box-shadow: 0 10px 25px rgba(99,102,241,0.3);
-}
-
-.btn-secondary:hover {
-    background: #f3f4f6;
-}
-
-/* =========================
-   REMOVE GROUP BUTTON
-========================= */
-.btn-remove-group {
-    background: white;            /* matches btn-secondary */
-    border: 1px solid #e5e7eb;
-    color: var(--danger);
-    padding: 8px 20px;
-    border-radius: 10px;
-    font-size: 13px;
-    text-decoration: none;
-    transition: 0.25s ease;
-    margin-left: 10px;            /* gap from other buttons */
-}
-
-.btn-remove-group:hover {
-    background: var(--danger);
-    color: white;
-    box-shadow: 0 6px 16px rgba(220, 38, 38, 0.25);
-}
-/* =========================
-   LOGOUT BUTTON
-========================= */
-.btn-logout {
-    background: #f87171;      /* soft red */
-    color: white;
-    padding: 8px 20px;
-    border-radius: 10px;
-    font-size: 13px;
-    text-decoration: none;
-    transition: 0.25s ease;
-    margin-left: 10px;
-}
-
-.btn-logout:hover {
-    background: #dc2626;       /* danger red on hover */
-    box-shadow: 0 6px 16px rgba(220,38,38,0.25);
-}
-
-/* =========================
-   REMOVE GROUP CONFIRMATION POPUP
-========================= */
-.confirmation-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.55);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-.confirmation-box {
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 30px 28px;
-    border-radius: 22px;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.2);
-    text-align: center;
-    max-width: 380px;
-    width: 90%;
-}
-
-.confirmation-box p {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--text-dark);
-    margin-bottom: 24px;
-}
-
-.confirmation-actions {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-}
-
-.confirmation-actions .btn {
-    padding: 8px 20px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.25s ease;
-}
-
-.btn-confirm-yes {
-    background: var(--danger);
-    color: white;
-    border: none;
-}
-
-.btn-confirm-yes:hover {
-    background: darkred;
-}
-
-.btn-confirm-no {
-    background: #f3f4f6;
-    color: var(--text-dark);
-    border: none;
-}
-
-.btn-confirm-no:hover {
-    background: #e5e7eb;
-}
-
-/* =========================
-   FADE ANIMATION FOR ROW REMOVAL
-========================= */
-.admin-table tr.fade-out {
+.fade-out {
     opacity: 0;
-    transform: translateX(-20px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-}
-/* =========================
-   CARD HEADER FLEX & CREATE BUTTON
-========================= */
-.card-header {
-    padding: 22px 28px;
-    background: var(--primary-soft);
-    display: flex;
-    justify-content: space-between; /* title left, button right */
-    align-items: center;
+    transform: translateX(-15px);
+    transition: all 0.3s ease;
 }
 
-.card-header h2 {
-    font-size: 16px;
-    font-weight: 600;
-}
 
-.card-header .btn-create-group {
-    font-size: 13px;
-    padding: 8px 18px;
-    background: var(--primary);
-    color: white;
-    border-radius: 10px;
-    font-weight: 500;
-    text-decoration: none;
-    transition: 0.25s ease;
-}
+/* Mobile */
 
-.card-header .btn-create-group:hover {
-    background: var(--primary-dark);
-    box-shadow: 0 10px 25px rgba(99,102,241,0.3);
+@media (max-width: 768px) {
+
+    .admin-container {
+        margin-top: 20px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
 }

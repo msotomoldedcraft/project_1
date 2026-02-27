@@ -3,167 +3,155 @@
 {% block title %}Admin Dashboard{% endblock %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/admin_dashboard.css') }}">
 {% endblock %}
 
 {% block body %}
 
-<div class="admin-container">
+<div class="grid-container fluid admin-container">
 
-    <!-- =========================
-         HEADER
-    ========================== -->
-    <div class="admin-header">
-        <div>
+    <!-- HEADER -->
+    <div class="grid-x align-justify align-middle margin-bottom-2">
+        <div class="cell small-12 medium-8">
             <h1>Admin Dashboard</h1>
             <p>Overview and management of Secret Exchange events</p>
         </div>
 
-        <a href="{{ path('app_logout') }}" class="btn-logout btn-logout-confirm">
-            Logout
-        </a>
+        <div class="cell small-12 medium-4 text-right">
+            <a href="{{ path('app_logout') }}" class="button alert">
+                Logout
+            </a>
+        </div>
     </div>
 
-
-    <!-- =========================
-         STATS
-    ========================== -->
+    <!-- STATS -->
     {% set totalUsers = 0 %}
     {% for group in groups %}
         {% set totalUsers = totalUsers + group.users|length %}
     {% endfor %}
 
-    <div class="stats-grid">
-        <div class="stat-card">
-            <span class="stat-label">Total Groups</span>
-            <span class="stat-value">{{ groups|length }}</span>
+    <div class="grid-x grid-margin-x margin-bottom-2">
+        <div class="cell small-12 medium-6">
+            <div class="callout primary">
+                <h6>Total Groups</h6>
+                <h3>{{ groups|length }}</h3>
+            </div>
         </div>
 
-        <div class="stat-card">
-            <span class="stat-label">Total Participants</span>
-            <span class="stat-value">{{ totalUsers }}</span>
+        <div class="cell small-12 medium-6">
+            <div class="callout primary">
+                <h6>Total Participants</h6>
+                <h3>{{ totalUsers }}</h3>
+            </div>
         </div>
     </div>
 
+    <!-- GROUPS TABLE -->
+    <div class="callout">
 
-    <!-- =========================
-         GROUP TABLE
-    ========================== -->
-    <div class="card">
-        <div class="card-header">
-            <h2>Event Groups</h2>
-            <!-- Create Group button inside the card header -->
-            <a href="{{ path('admin_group_create') }}" class="btn-create-group">
+        <div class="grid-x align-justify align-middle margin-bottom-1">
+            <h4 class="cell auto">Event Groups</h4>
+            <a href="{{ path('admin_group_create') }}" class="button primary">
                 + Create Group
             </a>
         </div>
 
         {% if groups|length > 0 %}
-        <div class="table-container">
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Event</th>
-                        <th>Participants</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
 
-                <tbody>
-                {% for group in groups %}
-                    <tr>
-                        <!-- EVENT COLUMN -->
-                        <td class="event-column">
-                            <div class="event-title">{{ group.name }}</div>
-                            <a href="{{ path('admin_user_add', { groupId: group.id }) }}" class="link-action">
-                                + Add Participant
+        <table class="stack hover">
+            <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Participants</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for group in groups %}
+                <tr>
+                    <td>
+                        <strong>{{ group.name }}</strong><br>
+                        <a href="{{ path('admin_user_add', { groupId: group.id }) }}">
+                            + Add Participant
+                        </a>
+                    </td>
+
+                    <td>
+                        {% if group.users|length > 0 %}
+                            {% for user in group.users %}
+                                <div>
+                                    <strong>{{ user.name }}</strong> ({{ user.email }})
+
+                                    {% if user.assignedTo %}
+                                        <span class="label success">Assigned</span>
+                                    {% else %}
+                                        <span class="label secondary">Pending</span>
+                                    {% endif %}
+
+                                    <div class="margin-top-1">
+                                        <a href="{{ path('admin_user_edit', { id: user.id }) }}" class="button tiny">
+                                            Edit
+                                        </a>
+
+                                        <a href="{{ path('admin_user_delete', { id: user.id }) }}"
+                                           class="button tiny alert"
+                                           onclick="return confirm('Remove this participant?')">
+                                            Delete
+                                        </a>
+
+                                        <a href="{{ path('admin_download_submission', { userId: user.id }) }}"
+                                           class="button tiny">
+                                            PDF
+                                        </a>
+                                    </div>
+                                </div>
+                                <hr>
+                            {% endfor %}
+                        {% else %}
+                            No participants yet
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <a href="{{ path('admin_draw_reset', { groupId: group.id }) }}"
+                           class="button warning tiny"
+                           onclick="return confirm('Reset assignments?')">
+                            Reset
+                        </a>
+
+                        <a href="{{ path('admin_view_results', { groupId: group.id }) }}"
+                           class="button secondary tiny">
+                            Results
+                        </a>
+
+                        {% if group.users|length > 1 %}
+                            <a href="{{ path('admin_draw_names', { groupId: group.id }) }}"
+                               class="button primary tiny">
+                                Draw Names
                             </a>
-                        </td>
+                        {% endif %}
 
-                        <!-- PARTICIPANTS COLUMN -->
-                        <td>
-                            {% if group.users|length > 0 %}
-                                <ul class="participant-list">
-                                    {% for user in group.users %}
-                                        <li class="participant-item">
-                                            <div class="participant-info">
-                                                <div class="participant-name">{{ user.name }}</div>
-                                                <div class="participant-email">{{ user.email }}</div>
+                        <a href="#"
+                           class="button alert tiny btn-remove-group"
+                           data-group-id="{{ group.id }}">
+                            Remove Group
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-                                                {% if user.assignedTo %}
-                                                    <span class="badge badge-success">Assigned</span>
-                                                {% else %}
-                                                    <span class="badge badge-muted">Pending</span>
-                                                {% endif %}
-                                            </div>
-
-                                            <div class="participant-actions-box">
-                                                <a href="{{ path('admin_user_edit', { id: user.id }) }}"
-                                                   class="btn-action btn-light">
-                                                    Edit
-                                                </a>
-
-                                                <a href="{{ path('admin_user_delete', { id: user.id }) }}"
-                                                   class="btn-action btn-danger"
-                                                   onclick="return confirm('Remove this participant?')">
-                                                    Delete
-                                                </a>
-
-                                                <a href="{{ path('admin_download_submission', { userId: user.id }) }}"
-                                                   class="btn-action btn-outline">
-                                                    PDF
-                                                </a>
-                                            </div>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <span class="text-muted">No participants yet</span>
-                            {% endif %}
-                        </td>
-
-                        <!-- GROUP ACTIONS COLUMN -->
-                        <td class="action-column">
-                            <div class="group-actions">
-                                <a href="{{ path('admin_draw_reset', { groupId: group.id }) }}"
-                                   class="btn-secondary"
-                                   onclick="return confirm('Reset all assignments for this group?')">
-                                    Reset
-                                </a>
-
-                                <a href="{{ path('admin_view_results', { groupId: group.id }) }}"
-                                   class="btn-secondary">
-                                    Results
-                                </a>
-
-                                {% if group.users|length > 1 %}
-                                    <a href="{{ path('admin_draw_names', { groupId: group.id }) }}"
-                                       class="btn-primary">
-                                        Draw Names
-                                    </a>
-                                {% else %}
-                                    <span class="text-muted small">Need at least 2 participants</span>
-                                {% endif %}
-
-                                <a href="#" class="btn-secondary btn-remove-group" data-group-id="{{ group.id }}">
-                                    Remove Group
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
         {% else %}
-            <div class="empty-state">
-                <p>No groups created yet.</p>
-                <a href="{{ path('admin_group_create') }}" class="btn-create-group">
-                    Create Your First Group
-                </a>
+            <div class="callout secondary">
+                No groups created yet.
             </div>
         {% endif %}
+
     </div>
+
 </div>
 
 <script src="{{ asset('js/admin_dashboard.js') }}"></script>

@@ -1,77 +1,122 @@
-{% block body %}
+{% extends 'base.html.twig' %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/intro.css') }}">
 {% endblock %}
 
-<div class="intro-paper">
+{% block body %}
+<div class="intro-page">
 
     <!-- HERO SECTION -->
-    <section class="hero-wrapper section-slide">
-        <div class="hero-card">
-            <h1>Welcome to Secret Exchange</h1>
-            <p class="hero-sub">Organize fun and anonymous gift exchanges with friends, family, or colleagues — simple, secure, and exciting.</p>
-            <a href="{{ path('app_login', { 'redirect': path('exchange_step_1') }) }}" class="btn-primary">Start Your Wishlist</a>
-            <div class="scroll-down" onclick="scrollToNext(this)">&#x25BC;</div>
-        </div>
-    </section>
+    <section class="intro-hero">
 
-    <!-- FEATURES SECTION -->
-    <section class="features-section section-slide">
-        <div class="content-wrapper">
-            <h2>Everything You Need</h2>
-            <div class="feature-list">
-                <div class="feature-item feature-1">
-                    <h3>Organize Gift Exchanges</h3>
-                    <p>Create groups, invite participants, and manage deadlines effortlessly.</p>
-                </div>
-                <div class="feature-item feature-2">
-                    <h3>Wishlist Management</h3>
-                    <p>Each participant adds their wishlist to make gift giving meaningful.</p>
-                </div>
-                <div class="feature-item feature-3">
-                    <h3>Random Matching</h3>
-                    <p>Smart system ensures fairness and prevents self-pairing.</p>
-                </div>
-                <div class="feature-item feature-4">
-                    <h3>Admin & Participant Tools</h3>
-                    <p>Admins control settings while participants enjoy the surprise.</p>
+        <div class="hero-overlay"></div>
+
+        <div class="grid-container hero-content">
+            <div class="grid-x align-middle align-center text-center full-height">
+                <div class="cell small-12 medium-8">
+
+                    <h1 class="hero-title">Secret Exchange</h1>
+
+                    <p class="hero-subtitle">
+                        Organize anonymous gift exchanges easily.
+                        Create groups, add participants, and let the system handle the rest.
+                    </p>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+
+                        <a href="{{ path('admin_dashboard') }}"
+                           class="button large hero-btn">
+                            Go to Dashboard
+                        </a>
+
+                    {% elseif is_granted('ROLE_USER') %}
+
+                        <a href="{{ path('exchange_step_1') }}"
+                           class="button large hero-btn">
+                            Start Your Wishlist
+                        </a>
+
+                    {% else %}
+
+                        <a href="{{ path('app_login') }}"
+                           class="button large hero-btn">
+                            Start Your Wishlist
+                        </a>
+
+                    {% endif %}
+
                 </div>
             </div>
         </div>
-        <div class="scroll-down" onclick="scrollToNext(this)">&#x25BC;</div>
+
     </section>
+
+
+    <!-- FEATURES SECTION -->
+    <section class="intro-section section-cool">
+
+        <div class="grid-container">
+
+            <div class="text-center section-title">
+                <h2>Everything You Need</h2>
+            </div>
+
+            <!-- Added grid-margin-y for proper mobile spacing -->
+            <div class="grid-x grid-margin-x grid-margin-y small-up-1 medium-up-2 large-up-4">
+
+                <div class="cell">
+                    <div class="feature-card">
+                        <h5>Organize Groups</h5>
+                        <p>Create and manage events in seconds.</p>
+                    </div>
+                </div>
+
+                <div class="cell">
+                    <div class="feature-card">
+                        <h5>Wishlists</h5>
+                        <p>Participants submit gift ideas.</p>
+                    </div>
+                </div>
+
+                <div class="cell">
+                    <div class="feature-card">
+                        <h5>Fair Matching</h5>
+                        <p>Automatic system prevents self-pairing.</p>
+                    </div>
+                </div>
+
+                <div class="cell">
+                    <div class="feature-card">
+                        <h5>Admin Control</h5>
+                        <p>Secure tools for full management.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
 
     <!-- ABOUT SECTION -->
-    <section class="about-section section-slide">
-        <div class="content-wrapper">
+    <section class="intro-section section-warm">
+
+        <div class="grid-container text-center">
+
             <h2>About Secret Exchange</h2>
-            <p>Secret Exchange is designed to make gift-giving easy, fun, and anonymous. Whether it’s for a holiday, birthday, or office event, participants can enjoy the excitement of giving and receiving surprises.</p>
-            <p>With a modern and responsive design, Secret Exchange lets users create groups, set up wishlists, and be paired with another participant randomly. The system ensures fairness by preventing anyone from being assigned to themselves.</p>
-            <p>Admins have access to secure tools for managing participants, monitoring confirmations, and overseeing gift assignments. Participants can focus on creating thoughtful wishlists while leaving the logistics to the system.</p>
-        </div>
-        <div class="scroll-down" onclick="scrollToNext(this)">&#x25BC;</div>
-    </section>
 
-    <!-- HOW IT WORKS SECTION -->
-    <section class="how-section section-slide">
-        <div class="content-wrapper">
-            <h2>How It Works</h2>
-                <p>Create a group and invite participants via email.</p>
-                <p>Each participant fills out their wishlist anonymously.</p>
-                <p>System randomly assigns recipients while avoiding self-pairing.</p>
-                <p>Participants get notified of their recipient securely.</p>
-                <p>Exchange gifts and enjoy the surprise!</p>
-        </div>
-    </section>
+            <p class="about-text">
+                Secret Exchange makes gift-giving simple, fun, and completely anonymous.
+                Whether you're organizing a holiday exchange with friends, a family surprise,
+                or a team event at work, our platform ensures a smooth and stress-free experience.
+            </p>
 
-    <!-- UP ARROW -->
-    <button class="scroll-up" onclick="scrollToTop()">&#x25B2;</button>
+        </div>
+
+    </section>
 
 </div>
-
-{% endblock %}
-
-{% block javascripts %}
-    <script src="{{ asset('js/intro.js') }}"></script>
 {% endblock %}

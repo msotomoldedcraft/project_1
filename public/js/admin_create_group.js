@@ -1,24 +1,31 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const card = document.querySelector(".group-create-card");
+document.addEventListener("DOMContentLoaded", function () {
+
+    const card = document.querySelector(".create-card");
     if (!card) return;
 
     // Fade-in animation
     card.style.opacity = 0;
     card.style.transform = "translateY(20px)";
+    card.style.transition = "all 0.4s ease";
+
     setTimeout(() => {
-        card.style.transition = "opacity 0.4s ease, transform 0.4s ease";
         card.style.opacity = 1;
         card.style.transform = "translateY(0)";
     }, 100);
 
-    // Optional: simple form validation highlight
+    // Form validation
     const form = card.querySelector("form");
-    form.addEventListener("submit", (e) => {
+    if (!form) return;
+
+    form.addEventListener("submit", function (e) {
+
         const input = form.querySelector("input[name='group_name']");
+        if (!input) return;
+
         if (!input.value.trim()) {
             e.preventDefault();
-            input.style.borderColor = "#dc2626";
             input.focus();
         }
     });
+
 });

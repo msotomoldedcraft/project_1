@@ -3,49 +3,61 @@
 {% block title %}Create Group{% endblock %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/admin_create_group.css') }}">
 {% endblock %}
 
 {% block body %}
-<div class="min-h-screen">
 
-    <div class="group-create-card">
+<div class="grid-container create-container">
 
-        <!-- Header -->
-        <h1>Create New Group</h1>
+    <div class="grid-x align-center">
+        <div class="cell small-12 medium-6 large-5">
 
-        <!-- Flash messages -->
-        {% for message in app.flashes('error') %}
-            <div class="flash-message">
-                {{ message }}
+            <div class="create-card">
+
+                <h2 class="text-center">Create New Group</h2>
+
+                <!-- Flash Messages -->
+                {% for message in app.flashes('error') %}
+                    <div class="callout alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+                <!-- Form -->
+                <form method="POST">
+
+                    <label>
+                        Group Name
+                        <input type="text"
+                               name="group_name"
+                               placeholder="Enter group name"
+                               required>
+                    </label>
+
+                    <button type="submit"
+                            class="button primary expanded">
+                        Create Group
+                    </button>
+
+                </form>
+
+                <!-- Back Link -->
+                <div class="text-center">
+                    <a href="{{ path('admin_dashboard') }}"
+                       class="button secondary hollow small">
+                        ← Back to Dashboard
+                    </a>
+                </div>
+
             </div>
-        {% endfor %}
 
-        <!-- Form -->
-        <form method="POST">
-            <div class="form-group">
-                <label>Group Name</label>
-                <input 
-                    type="text" 
-                    name="group_name" 
-                    placeholder="Enter group name" 
-                    required
-                >
-            </div>
-
-            <button type="submit">Create Group</button>
-        </form>
-
-        <!-- Back link -->
-        <div class="text-center">
-            <a href="{{ path('admin_dashboard') }}" class="back-link">
-                ← Back to Dashboard
-            </a>
         </div>
-
     </div>
 
 </div>
 
 <script src="{{ asset('js/admin_create_group.js') }}"></script>
+
 {% endblock %}
